@@ -13,9 +13,9 @@ export default function ProblemsetPage(){
     const [data, setData] = useState([]);
 
     async function getData(){
+        setLoading(true);
         let data = await getProblemset();
         setData(data);
-        console.log(data)
         setLoading(false);
     }
 
