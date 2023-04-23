@@ -7,7 +7,7 @@
     --background-color: transparent;
   }
   .ResizeHandleOuter[data-resize-handle-active] {
-    --background-color: var(--color-solid-resize-bar-handle);
+    --background-color: "white";
   }
   
   .ResizeHandleInner {

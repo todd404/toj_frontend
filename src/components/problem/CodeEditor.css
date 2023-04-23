@@ -1,0 +1,22 @@
+.cm-theme-light{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    max-height: calc(100% - 112px);
+}
+
+.wrapper{
+    height: 100%; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.language-selector{
+    margin-top: 12px
+}
+
+.submit-button{
+    width: 5em; 
+    align-self: flex-end; 
+    margin-top: 1em
+}
