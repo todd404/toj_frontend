@@ -21,6 +21,7 @@ function LanguageSelect(props){
 export default function CodeEditor(){
     const [extenstions, setExtensions] = useState([]);
     const [language, setLanguage] = useState("cpp");
+    
     const handleLanguageChange = (value)=>{
         setLanguage(value);
     }
