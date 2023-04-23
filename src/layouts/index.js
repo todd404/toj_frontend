@@ -1,13 +1,13 @@
 import { Link, Outlet } from 'umi';
 import './index.less';
 
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, } from 'antd';
 import {BuildTwoTone} from '@ant-design/icons'
 const { Header, Content, Footer } = Layout;
 
 export default function Home() {
   return (
-    <Layout className="layout">
+    <Layout className="layout" style={{height: "100%"}}>
       <Header className='header' style={{display: "flex"}}>
         <BuildTwoTone style={{fontSize: "32px", margin: "16px 24px 16px 0"}} />
         <Menu

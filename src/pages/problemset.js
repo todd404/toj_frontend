@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import ProblemsetTable from "../components/ProblemsetTable";
+import ProblemsetTable from "../components/problemset/ProblemsetTable";
 import axios from "axios";
 
 async function getProblemset(){

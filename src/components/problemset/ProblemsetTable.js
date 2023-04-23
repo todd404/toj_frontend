@@ -1,6 +1,7 @@
 import {CheckCircleOutlined} from '@ant-design/icons'
 import { Table } from 'antd'
 import ProblemCheckIcon from './ProblemCheckIcon'
+import ProblemLink from './ProblemLink'
 
 const columns = [
     {
@@ -11,7 +12,7 @@ const columns = [
     {
         title: "题目",
         dataIndex: ['id', 'title'],
-        render: (_, {id, title})=>`${id}.${title}`,
+        render: (_, {id, title})=><ProblemLink {...{id, title}}/>,
         sorter: (a, b) => a.id - b.id
     },
     {
@@ -22,7 +23,8 @@ const columns = [
     },
     {
         title: "难度",
-        dataIndex: 'difficulty'
+        dataIndex: 'difficulty',
+        sorter: (a, b) => a.difficulty - b.difficulty,
     },
 ]
 
