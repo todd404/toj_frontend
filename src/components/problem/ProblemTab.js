@@ -2,6 +2,7 @@ import { AlignLeftOutlined, CommentOutlined, ClockCircleOutlined } from '@ant-de
 import { Tabs } from 'antd';
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
+import CommentList from './Comment/CommnetList';
 import "./css/ProblemTab.css"
 
 const items = [
@@ -24,7 +25,10 @@ const items = [
         label: (<span>
             <CommentOutlined />
             评论
-        </span>)
+        </span>),
+        children: (
+            <CommentList></CommentList>
+        )
     },
     {
         key: '3',
@@ -37,6 +41,6 @@ const items = [
 
 export default function ProblemTab(){
     return(
-        <Tabs style={{maxHeight: "100%"}} defaultActiveKey='1' items={items}></Tabs>
+        <Tabs className="problem-tab" style={{maxHeight: "100%"}} defaultActiveKey='1' items={items}></Tabs>
     )
 }

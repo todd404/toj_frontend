@@ -2,7 +2,6 @@ import { useParams } from 'umi'
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ProblemContent from '../components/problem/ProblemContent';
 import ResizeHandle from '../components/problem/ResizeHandle';
-import CodeMirror from "@uiw/react-codemirror"
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { useState } from 'react';
 import CodeEditor from '../components/problem/CodeEditor';
