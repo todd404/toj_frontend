@@ -2,7 +2,7 @@ import CodeMirror from "@uiw/react-codemirror"
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { Tabs, Select, Button } from "antd";
 import { useState } from "react";
-import './CodeEditor.css'
+import './css/CodeEditor.css'
 
 //TODO:可以改成从后端获取可使用的语言
 
@@ -21,7 +21,7 @@ function LanguageSelect(props){
 export default function CodeEditor(){
     const [extenstions, setExtensions] = useState([]);
     const [language, setLanguage] = useState("cpp");
-    
+
     const handleLanguageChange = (value)=>{
         setLanguage(value);
     }

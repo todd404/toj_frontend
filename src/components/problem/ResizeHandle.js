@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PanelResizeHandle } from "react-resizable-panels";
 
-import styles from "./ResizeHandle.css";
+import styles from "./css/ResizeHandle.css";
 
 export default function ResizeHandle({
   className = "",
