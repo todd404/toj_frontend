@@ -1,5 +1,7 @@
 import { List, Avatar, ConfigProvider, Space, } from 'antd'
 import { UpOutlined } from '@ant-design/icons'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const data = Array.from({ length: 23 }).map((_, i) => ({
     id: i,
@@ -10,8 +12,25 @@ const data = Array.from({ length: 23 }).map((_, i) => ({
       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
 }));
 
+const getData = async (commnet_id)=>{
+    let res = await axios.get(`http://192.168.50.168:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/sub_comment?apipost_id=d6046a`)
+    return res.data.data;
+}
 
 export default function SubCommnet({commnetId, onFoldCLick}){
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const updateData = async ()=>{
+        setLoading(true);
+        let data = await getData();
+        setData(data);
+        setLoading(false);
+    }
+
+    useEffect(()=>{
+        updateData();
+    },[])
 
     function FoldFooter (props){
         return(

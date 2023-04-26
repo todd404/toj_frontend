@@ -2,7 +2,7 @@ import { AlignLeftOutlined, CommentOutlined, ClockCircleOutlined } from '@ant-de
 import { Tabs } from 'antd';
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
-import CommentList from './Comment/CommnetList';
+import ProblemComment from './Comment/ProblemComment';
 import "./css/ProblemTab.css"
 
 const items = [
@@ -27,7 +27,7 @@ const items = [
             评论
         </span>),
         children: (
-            <CommentList></CommentList>
+            <ProblemComment></ProblemComment>
         )
     },
     {

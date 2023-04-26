@@ -4,6 +4,7 @@ import React from "react";
 import SubCommnet from "./SubComment";
 import { useState, useEffect } from 'react'
 import axios from "axios";
+import CommentInput from "./CommentInput";
 
 const IconText = ({normalIcon, activeIcon, active, text, onClick, name, forComment})=>(
     <Space onClick={()=>{onClick(forComment, name)}} style={{cursor: "pointer"}}>
@@ -13,7 +14,7 @@ const IconText = ({normalIcon, activeIcon, active, text, onClick, name, forComme
 )
 
 const getComments = async (problem_id)=>{
-    let res = await axios.get(`http://192.168.1.100:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/comments?apipost_id=afb4a7&problem=${problem_id}`)
+    let res = await axios.get(`http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/comments?apipost_id=afb4a7&problem=${problem_id}`)
     return res.data.data;
 }
 
@@ -29,7 +30,7 @@ export default function CommentList(){
 
     const handleActionClicks = (commentId, action)=>{
         switch(action){
-            case 'sub_comment':
+            case 'sub_comment':{
                 let isActive, selector;
                 let temp = data.map((value)=>{
                     if(value.id == commentId){
@@ -45,6 +46,15 @@ export default function CommentList(){
                     document.querySelector(selector).scrollIntoView();
                 }
                 break;
+            }
+            case 'reply':{
+                let temp = data.map((value=>(
+                    value.id == commentId ? {...value, reply_active: !value.reply_active} : value
+                )))
+                setData(temp);
+                break;
+            }
+                
         }
     }
 
@@ -63,41 +73,42 @@ export default function CommentList(){
     }, []);
 
     return (
-    <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-            pageSize: 5
-        }}
-        loading={loading}
-        dataSource={data}
-        renderItem={(item)=>
-          <div>
-            <List.Item
-                id={`comment-${item.id}`}
-                key={ item.id }
-                actions={actions.map((action)=>{
-                    return(
-                        <IconText
-                            forComment={item.id} 
-                            text={item[action.name]} 
-                            active={item[`${action.name}_active`]} 
-                            onClick={handleActionClicks} 
-                            {...action}
-                        />
-                    )
-                })}
-            >
-                <List.Item.Meta
-                    avatar={<Avatar src={item.avatar} />}
-                    title={item.user_name} //TODO:改成用户链接
-                />
+        <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+                pageSize: 5
+            }}
+            loading={loading}
+            dataSource={data}
+            renderItem={(item)=>
+            <div>
+                <List.Item
+                    id={`comment-${item.id}`}
+                    key={ item.id }
+                    actions={actions.map((action)=>{
+                        return(
+                            <IconText
+                                forComment={item.id} 
+                                text={item[action.name]} 
+                                active={item[`${action.name}_active`]} 
+                                onClick={handleActionClicks} 
+                                {...action}
+                            />
+                        )
+                    })}
+                >
+                    <List.Item.Meta
+                        avatar={<Avatar src={item.avatar} />}
+                        title={item.user_name} //TODO:改成用户链接
+                    />
 
-                {item.content}
-            </List.Item>
-            {(item.sub_comment_active && <SubCommnet onFoldCLick={()=>{handleActionClicks(item.id, "sub_comment")}}/>)}
-          </div>
-        }
-    />
+                    {item.content}
+                </List.Item>
+                {(item.reply_active && <CommentInput/>)}
+                {(item.sub_comment_active && <SubCommnet onFoldCLick={ ()=>{handleActionClicks(item.id, "sub_comment")} }/>)}
+            </div>
+            }
+        />
     )
 }
