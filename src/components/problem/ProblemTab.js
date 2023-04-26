@@ -1,46 +1,55 @@
 import { AlignLeftOutlined, CommentOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Tabs } from 'antd';
-import ReactMarkdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
-import ProblemComment from './Comment/ProblemComment';
+import { Outlet, useNavigate } from 'umi'
 import "./css/ProblemTab.css"
 
 const items = [
     {
-        key: '1',
+        key: 'discribe',
         label: (<span>
             <AlignLeftOutlined />
             题目描述
         </span>),
         children: (
-        <div style={{backgroundColor: "white"}}>
-            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-                {'# markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n # markdown\n'}
-            </ReactMarkdown>
-        </div>   
+            <Outlet></Outlet> 
         )
     },
     {
-        key: '2',
+        key: 'comment',
         label: (<span>
             <CommentOutlined />
             评论
         </span>),
         children: (
-            <ProblemComment></ProblemComment>
+            <Outlet></Outlet>
         )
     },
     {
-        key: '3',
+        key: 'history',
         label: (<span>
             <ClockCircleOutlined />
             提交记录
-        </span>)
+        </span>),
+        children: (
+            <Outlet></Outlet>
+        )
     },
 ]
 
 export default function ProblemTab(){
+    const navigate = useNavigate();
+
+    const handleTabChange = (activeKey)=>{
+        navigate(activeKey)
+    }
+
     return(
-        <Tabs className="problem-tab" style={{maxHeight: "100%"}} defaultActiveKey='1' items={items}></Tabs>
+        <Tabs 
+            className="problem-tab" 
+            style={{maxHeight: "100%"}} 
+            defaultActiveKey='1'
+            items={items}
+            onChange={handleTabChange}
+        />
     )
 }
