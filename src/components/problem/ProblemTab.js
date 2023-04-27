@@ -1,6 +1,7 @@
 import { AlignLeftOutlined, CommentOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Tabs } from 'antd';
-import { Outlet, useNavigate } from 'umi'
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate, useSelectedRoutes } from 'umi'
 import "./css/ProblemTab.css"
 
 const items = [
@@ -38,16 +39,25 @@ const items = [
 
 export default function ProblemTab(){
     const navigate = useNavigate();
+    const routes = useSelectedRoutes();
+
+    useEffect(()=>{
+        let path = routes.lastItem.route.path;
+        setActiveKey(path);
+    }, [routes])
 
     const handleTabChange = (activeKey)=>{
-        navigate(activeKey)
+        navigate(activeKey);
     }
 
+    const [activeKey, setActiveKey] = useState("");
+
     return(
-        <Tabs 
+        <Tabs
+            activeKey={activeKey}
             className="problem-tab" 
             style={{maxHeight: "100%"}} 
-            defaultActiveKey='1'
+            defaultActiveKey='discribe'
             items={items}
             onChange={handleTabChange}
         />
