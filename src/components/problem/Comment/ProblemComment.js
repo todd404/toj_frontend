@@ -9,14 +9,10 @@ export default function ProblemComment(){
     let commentId = querys.get("comment");
     let subCommentId = querys.get("subcomment");
 
-    useEffect(()=>{
-        
-    }, [])
-
     return(
         <div>
             <CommentInput/>
-            <CommentList />
+            <CommentList focus={{commentId, subCommentId}}/>
         </div>
     )
 }
