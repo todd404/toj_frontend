@@ -1,4 +1,4 @@
-import { LikeOutlined, MessageOutlined, StarOutlined, StarTwoTone, LikeTwoTone, MessageTwoTone, EditOutlined, EditTwoTone  } from "@ant-design/icons";
+import { LikeOutlined, MessageOutlined, LikeTwoTone, MessageTwoTone, EditOutlined, EditTwoTone  } from "@ant-design/icons";
 import { Avatar, List, Space } from "antd";
 import React, { useRef } from "react";
 import SubCommnet from "./SubComment";
@@ -41,14 +41,14 @@ export default function CommentList({ focus }){
         CommentUtils.focusComment(focus_id);
     }
 
-    const updateComments = async (problem_id=123)=>{
+    const updateComments = async (problem_id)=>{
         setLoading(true);
         let data = await getComments(problem_id);
         data = data.map((value)=>{
             let sub_comment_active = (value.id == focus.commentId ? true : false);
             let like_active = value.is_user_like;
             let reply_active = false;
-            return { like_active, sub_comment_active, reply_active , ...value }
+            return { like_active, sub_comment_active, reply_active, ...value }
         })
         setData(data);
         setLoading(false);
@@ -87,32 +87,32 @@ export default function CommentList({ focus }){
             loading={loading}
             dataSource={data}
             renderItem={(item)=>
-            <div>
-                <List.Item
-                    id={ `comment-${item.id}` }
-                    key={ item.id }
-                    actions={actions.map((action)=>{
-                        return(
-                            <IconText
-                                forComment={item.id} 
-                                text={item[action.name]} 
-                                active={item[`${action.name}_active`]} 
-                                onClick={handleActionClicks} 
-                                {...action}
-                            />
-                        )
-                    })}
-                >
-                    <List.Item.Meta
-                        avatar={<Avatar src={item.avatar} />}
-                        title={item.user_name} //TODO:改成用户链接
-                    />
+                <div>
+                    <List.Item
+                        id={ `comment-${item.id}` }
+                        key={ item.id }
+                        actions={actions.map((action)=>{
+                            return(
+                                <IconText
+                                    forComment={item.id} 
+                                    text={item[action.name]} 
+                                    active={item[`${action.name}_active`]} 
+                                    onClick={handleActionClicks} 
+                                    {...action}
+                                />
+                            )
+                        })}
+                    >
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.avatar} />}
+                            title={item.user_name} //TODO:改成用户链接
+                        />
 
-                    {item.content}
-                </List.Item>
-                {(item.reply_active && <CommentInput/>)}
-                {(item.sub_comment_active && <SubCommnet focus={focus} commentId={item.id} onFoldCLick={ ()=>{handleActionClicks(item.id, "sub_comment")} }/>)}
-            </div>
+                        {item.content}
+                    </List.Item>
+                    {(item.reply_active && <CommentInput/>)}
+                    {(item.sub_comment_active && <SubCommnet focus={focus} commentId={item.id} onFoldCLick={ ()=>{handleActionClicks(item.id, "sub_comment")} }/>)}
+                </div>
             }
         />
     )

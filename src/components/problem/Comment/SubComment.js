@@ -29,7 +29,6 @@ export default function SubCommnet({commnetId, onFoldCLick, focus}){
             if(data.length > 0){
                 let page = CommentUtils.getCommentPageNum(focus.subCommentId, data);
                 setCurrentPage(page);
-                console.log(page);
                 firstLoad.current = false;
             }
         }
