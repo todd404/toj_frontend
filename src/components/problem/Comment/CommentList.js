@@ -91,10 +91,14 @@ export default function CommentList({ focus }){
     const updateComments = async (problem_id=123)=>{
         setLoading(true);
         let data = await getComments(problem_id);
-        data = data.map((value)=>(
-            { like_active: value.is_user_like, sub_comment_active: false, reply_active: false, ...value }
-        ))
+        data = data.map((value)=>{
+            let sub_comment_active = value.id == focus.commentId ? true : false;
+            let like_active = value.is_user_like;
+            let reply_active = false;
+            return { like_active, sub_comment_active, reply_active , ...value }
+        })
         setData(data);
+        console.log(data);
         setLoading(false);
     }
 
@@ -103,7 +107,7 @@ export default function CommentList({ focus }){
             if(data.length > 0){
                 let page = getCommentPageNum(focus.commentId, data);
                 setCurrentPage(page);
-                console.log(page)
+                console.log(page);
                 firstLoad.current = false;
             }
         }
