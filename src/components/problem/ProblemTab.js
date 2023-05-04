@@ -43,6 +43,7 @@ export default function ProblemTab(){
 
     useEffect(()=>{
         let path = routes.lastItem.route.path;
+        path = (path == "" ? "discribe" : path)
         setActiveKey(path);
     }, [routes])
 
