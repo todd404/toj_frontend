@@ -1,8 +1,9 @@
-import { Link, Outlet } from 'umi';
+import {  Outlet } from 'umi';
 import './index.less';
 
 import { Layout, Menu, } from 'antd';
-import {BuildTwoTone} from '@ant-design/icons'
+import { BuildTwoTone } from '@ant-design/icons'
+import UserBar from '../components/user/UserBar';
 const { Header, Content, Footer } = Layout;
 
 export default function Home() {
@@ -15,12 +16,14 @@ export default function Home() {
           mode="horizontal"
           defaultSelectedKeys={['1']}
           items={[{key: 1, label: "题库"}]}
+          style={{ flexGrow: "2" }}
         />
+        <UserBar/>
       </Header>
       <Content style={{ padding: '0 50px' }}>
         <Outlet></Outlet>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+      <Footer style={{ textAlign: 'center' }}>TOJ ©2023 Created by Todd</Footer>
     </Layout>
   );
 }
