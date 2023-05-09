@@ -5,8 +5,16 @@ import { Layout, Menu, } from 'antd';
 import { BuildTwoTone } from '@ant-design/icons'
 import UserBar from '../components/user/UserBar';
 const { Header, Content, Footer } = Layout;
+import { useSelectedRoutes } from "umi"
+import Admin from './admin';
 
 export default function Home() {
+  const routes = useSelectedRoutes();
+
+  if(routes[1].route.path.includes("admin")){
+    return (<Admin></Admin>)
+  }
+
   return (
     <Layout className="layout" style={{height: "100%"}}>
       <Header className='header' style={{display: "flex"}}>
@@ -20,7 +28,7 @@ export default function Home() {
         />
         <UserBar/>
       </Header>
-      <Content style={{ padding: '0 50px' }}>
+      <Content style={{ padding: '3em 50px', overflow: "auto" }}>
         <Outlet></Outlet>
       </Content>
       <Footer style={{ textAlign: 'center' }}>TOJ ©2023 Created by Todd</Footer>

@@ -1,13 +1,9 @@
 import { Table } from 'antd'
-import ProblemCheckIcon from './ProblemCheckIcon'
-import ProblemLink from './ProblemLink'
+import ProblemLink from "../../problemset/ProblemLink"
+import DeleteIcon from './DeleteIcon'
+import EditLink from './EditLink'
 
 const columns = [
-    {
-        title: "状态",
-        dataIndex: 'state',
-        render: (_, {state})=>state?<ProblemCheckIcon />:<div></div>
-    },
     {
         title: "题目",
         dataIndex: ['id', 'title'],
@@ -25,6 +21,14 @@ const columns = [
         dataIndex: 'difficulty',
         sorter: (a, b) => a.difficulty - b.difficulty,
     },
+    {
+        title: "编辑",
+        render: (_, {id})=><EditLink id={id}/>
+    },
+    {
+        title: "删除",
+        render: (_, {id})=><DeleteIcon/>
+    }
 ]
 
 export default function ProblemsetTable(props){
@@ -33,6 +37,7 @@ export default function ProblemsetTable(props){
             columns={columns}
             rowKey={(record) => record.id}
             {...props}
-        />
+        >
+        </Table>
     )
 }
