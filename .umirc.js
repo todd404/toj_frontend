@@ -21,7 +21,13 @@ export default defineConfig({
       path: "/admin", component: "problemset",
     },
     {
-      path: "/admin/manager", component: "ProblemManager",
+      path: "/admin/problem-manager", component: "ProblemManager",
+    },
+    {
+      path: "/admin/edit/:id", component: "ProblemEdit"
+    },
+    {
+      path: "/admin/add-problem", component: "AddProblem"
     },
   ],
   npmClient: 'cnpm',

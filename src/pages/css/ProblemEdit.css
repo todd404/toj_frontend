@@ -1,0 +1,10 @@
+.cm-theme-light{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100% - 176px);
+}
+
+.cm-editor{
+    flex-grow: 1;
+}
