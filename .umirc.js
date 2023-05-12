@@ -31,4 +31,5 @@ export default defineConfig({
     },
   ],
   npmClient: 'cnpm',
+  esbuildMinifyIIFE: true,
 });
