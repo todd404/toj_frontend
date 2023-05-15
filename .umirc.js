@@ -29,6 +29,9 @@ export default defineConfig({
     {
       path: "/admin/add-problem", component: "AddProblem"
     },
+    {
+      path: "/register", component: "register"
+    },
   ],
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
