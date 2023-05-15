@@ -13,7 +13,7 @@ async function getUserInfo(){
 }
 
 async function getMessages(){
-	let url = `http://192.168.1.100:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/messages`
+	let url = `http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/messages`
 	let res = await axios.get(url);
 	return res.data;
 }
