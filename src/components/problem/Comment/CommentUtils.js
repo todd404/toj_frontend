@@ -30,7 +30,7 @@ export function actionsProcess( commentId, action, data ){
                 return value;
             })
             result_data = temp;
-            focus_id = id ? commentUtils.focusComment(id) : null;
+            focus_id = id ? focusComment(id) : null;
             break;
         }
         case 'reply':{
