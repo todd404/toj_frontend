@@ -30,6 +30,9 @@ export default defineConfig({
       path: "/admin/add-problem", component: "AddProblem"
     },
     {
+      path: "/admin/user-manager", component: "usermanager"
+    },
+    {
       path: "/register", component: "register"
     },
   ],
