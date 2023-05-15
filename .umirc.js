@@ -33,6 +33,9 @@ export default defineConfig({
       path: "/admin/user-manager", component: "usermanager"
     },
     {
+      path: "/admin/edit-user/:userid", component: "UserEdit"
+    },
+    {
       path: "/register", component: "register"
     },
   ],
