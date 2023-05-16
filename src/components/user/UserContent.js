@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Space } from "antd";
+import { Button, List } from "antd";
 import { Typography } from 'antd';
 const { Text } = Typography;
 

@@ -1,4 +1,4 @@
-import { Avatar, Badge, List, Popover, Space } from "antd"
+import { Avatar, Badge, Popover, Space } from "antd"
 import { MailTwoTone, UserOutlined } from "@ant-design/icons"
 import Login from "./Login"
 import { useEffect, useState } from "react"
@@ -30,7 +30,6 @@ export default function UserBar(){
 		"avatar": "",
 		"message_count": 0}
 	});
-	const [avatar, setAvatar] = useState({});
 
 	const [messages, setMessages] = useState({
 		success: false,
