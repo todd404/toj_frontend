@@ -27,9 +27,10 @@ export default function UserBar(){
 		"user_id": -1,
 		"user_name": "",
 		"is_admin": false,
-		"avator": "",
+		"avatar": "",
 		"message_count": 0}
 	});
+	const [avatar, setAvatar] = useState({});
 
 	const [messages, setMessages] = useState({
 		success: false,
@@ -39,8 +40,8 @@ export default function UserBar(){
 	const openLogin = ()=>setLoginOpen(true);
 
 	const updateUserInfo = async ()=>{
-		let data = await getUserInfo();
-		setUserInfo(data);
+		let userInfo = await getUserInfo();
+		setUserInfo(userInfo);
 	}
 
 	const updateMessages = async ()=>{
@@ -68,9 +69,9 @@ export default function UserBar(){
 				open={infoOpen}
 				trigger='hover'
 				onOpenChange={(newOpen)=>{setInfoOpen(newOpen && userInfo.success)}}
-				content={(<UserContent avatar={userInfo.userinfo.avator} username={userInfo.userinfo.user_name}/>)}
+				content={(<UserContent username={userInfo.userinfo.user_name}/>)}
 			>
-				<Avatar srcSet={userInfo.userinfo.avator} onClick={userInfo.success ? ()=>{} : openLogin} icon={<UserOutlined/>} style={{ cursor: "pointer" }}/>
+				<Avatar src={userInfo.userinfo.avatar} onClick={userInfo.success ? ()=>{} : openLogin} icon={<UserOutlined/>} style={{ cursor: "pointer" }}/>
 			</Popover>
             <Login open={loginOpen} onOk={()=>setLoginOpen(false)} onCancel={()=>setLoginOpen(false)}/>
           </Space>

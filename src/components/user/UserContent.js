@@ -7,16 +7,13 @@ export default function UserContent({avatar, username}){
         <List
             size="small"
         >
-            <List.Item>
-                <Space>
-                    <Avatar src={avatar}/>
-                    <Text
-                        style={ {width: "3em", textAlign: "center"} }
-                        ellipsis={true}
-                    >
-                        {username}
-                    </Text>
-                </Space>
+            <List.Item style={{ flexDirection: "column" }}>
+                <Text
+                    style={ {width: "3em", textAlign: "center", alignSelf: "center"} }
+                    ellipsis={true}
+                >
+                    {username}
+                </Text>
             </List.Item>
 
             <List.Item style={ {flexDirection: "column"} }>
