@@ -38,6 +38,9 @@ export default defineConfig({
     {
       path: "/register", component: "register"
     },
+    {
+      path: "/usercenter", component: "UserCenter"
+    },
   ],
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
