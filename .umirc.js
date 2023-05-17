@@ -44,4 +44,5 @@ export default defineConfig({
   ],
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
+  title: 'TOJ',
 });
