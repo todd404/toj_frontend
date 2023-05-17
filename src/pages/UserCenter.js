@@ -1,5 +1,4 @@
-import {Avatar, Button, Form, Input, Upload} from "antd";
-import { useParams } from "umi"
+import {Avatar, Button, Form, Input, message, Upload} from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
@@ -41,6 +40,40 @@ const getUserInfo = async ()=>{
     return res.data
 }
 
+//TODO: 密码md5处理
+const submitEdit = async (values)=>{
+    if(values.old_password && !values.new_password){
+        message.error("请输入修改的新密码，如果不想修改请不要填写旧密码");
+        return;
+    }
+
+    if(!values.old_password && values.new_password){
+        message.error("修改密码请输入旧密码");
+        return;
+    }
+
+    let formData = {};
+    formData["user_name"] = values["user_name"];
+    if(values.avatar){
+        if(values.avatar.file.status == "done"){
+            formData["avatar_file_uuid"] = values.avatar.file.response.file_uuid;
+        }
+    }
+    if(values.old_password && values.new_password){
+        formData["old_password"] = values["old_password"];
+        formData["new_password"] = values["new_password"];
+    }
+
+    let res = await axios.postForm(
+        `http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/user-edit`,
+        formData
+    );
+    console.log(formData)
+    if(!res.data.success){
+        message.error(res.data.message);
+    }
+}
+
 export default function UserCenter() {
     const [form] = Form.useForm();
     const [userInfo, setUserInfo] = useState({
@@ -73,9 +106,7 @@ export default function UserCenter() {
             form={form}
             {...formItemLayout}
             name="edituser"
-            onFinish={(values) => {
-                console.log(values)
-            }}
+            onFinish={submitEdit}
             autoComplete="off">
 
             <Form.Item
@@ -97,7 +128,6 @@ export default function UserCenter() {
             >
                 <Upload
                     action={`http://localhost:5000/upload`}
-                    onChange={(info)=>{console.log(info)}}
                     maxCount={1}
                 >
                     <Button icon={(<UploadOutlined/>)}>点击上传头像</Button>
