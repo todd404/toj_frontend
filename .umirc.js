@@ -46,6 +46,6 @@ export default defineConfig({
   esbuildMinifyIIFE: true,
   title: 'TOJ',
   define: {
-    SERVER_SOCKET: "localhost:8080"
+    SERVER_BASE: "http://172.24.89.158:8080"
   }
 });
