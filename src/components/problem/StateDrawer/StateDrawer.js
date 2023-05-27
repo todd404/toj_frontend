@@ -14,7 +14,7 @@ const getState = async (uuid)=>{
 
 const StateIcon = function ({state, style}){
     if(state.includes("error")){
-        return <CloseCircleTwoTone twoToneColor={"#800000"} {...{style}} />
+        return <CloseCircleTwoTone twoToneColor={"#CF000F"} {...{style}} />
     }else if(state.includes("success")){
         return <CheckCircleTwoTone twoToneColor={"#32CD32"} {...{style}}/>
     }else{
