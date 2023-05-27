@@ -2,7 +2,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    max-height: calc(100% - 176px);
+    max-height: calc(100% - 223px);
 }
 
 .cm-editor{

@@ -18,7 +18,7 @@ export default defineConfig({
       ]
     },
     {
-      path: "/admin", component: "problemset",
+      path: "/admin", component: "ProblemManager",
     },
     {
       path: "/admin/problem-manager", component: "ProblemManager",
@@ -45,4 +45,7 @@ export default defineConfig({
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
   title: 'TOJ',
+  define: {
+    SERVER_SOCKET: "localhost:8080"
+  }
 });
