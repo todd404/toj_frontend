@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import CodeEditor from '../components/problem/CodeEditor';
 import { message } from 'antd';
 import axios from 'axios';
+import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 
 const postJudge = async (formData)=>{
     let res = await axios.postForm(`${SERVER_BASE}/api/judge`, formData);
@@ -16,6 +17,8 @@ export default function problem(){
     const { id } = useParams();
     const [language, setLanguage] = useState("cpp"); 
     const [code, setCode] = useState("");
+    const [uuid, setUuid] = useState("");
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     document.addEventListener('keydown', function(event) {
         // 检查按下的键是否是Ctrl键和字母S（ASCII码为83）
@@ -28,6 +31,7 @@ export default function problem(){
     const onSubmitClick = async ()=>{
         let formData = {problemId: id, code, language};
         let uuid = await postJudge(formData);
+        setUuid(uuid);
         console.log(uuid);
     }
 
@@ -42,8 +46,15 @@ export default function problem(){
     }, [language])
 
     useEffect(()=>{
+        //代码改变时自动保存到本地存储里
         localStorage[`${id}-${language}`] = code;
     }, [code])
+
+    useEffect(()=>{
+        if(uuid){
+            setDrawerOpen(true);
+        }
+    }, [uuid])
 
     return(
         <div style={{height: "100%"}}>
@@ -61,6 +72,7 @@ export default function problem(){
                     />
                 </Panel>
             </PanelGroup>
+            <StateDrawer uuid={uuid} open={drawerOpen} onClose={()=>{setDrawerOpen(false)}} />
         </div>
         
     )
