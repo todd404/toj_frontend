@@ -19,34 +19,42 @@ const formItemLayout = {
         span: 8,
       },
     },
-  };
+};
 
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {
-        span: 24,
-        offset: 0,
+            span: 24,
+            offset: 0,
         },
         sm: {
-        span: 16,
-        offset: 8,
+            span: 16,
+            offset: 8,
         },
     },
 };
 
+const autoLogin = async (formData)=>{
+    let url = `${SERVER_BASE}/api/login`
+    await axios.postForm(url, formData);
+    window.location = "/";
+}
+
 const postRegisterForm = async (formData)=>{
-    let res = await axios.postForm(`${SERVER_BASE}/api/register`, formData);
+    let url = `${SERVER_BASE}/api/register`
+    let res = await axios.postForm(url, formData);
     let data = res.data;
     if(!data.succuss){
         message.error("注册失败！");
     }else{
-        message.success("注册成功！");
+        message.success("注册成功！一秒后自动登录！");
+        setTimeout(()=>{
+            autoLogin();
+        }, 1000)
     }
 }
 
 export default function register() {
-    const [form] = Form.useForm();
-
     const registerAccount = async (values)=>{
         let {username, password} = values;
         let formData = {username};

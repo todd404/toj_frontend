@@ -1,4 +1,4 @@
-import { Avatar, Badge, Popover, Space } from "antd"
+import { Avatar, Badge, message, Popover, Space } from "antd"
 import { MailTwoTone, UserOutlined } from "@ant-design/icons"
 import Login from "./Login"
 import { useEffect, useState } from "react"
@@ -8,15 +8,28 @@ import MessageList from "./MessageList"
 import {useNavigate} from "umi"
 
 async function getUserInfo(){
-	let url = `http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/userinfo`
-	let res = await axios.get(url);
+	let url = `${SERVER_BASE}/api/userinfo`
+	let res = await axios.get(url, {withCredentials: true});
 	return res.data;
 }
 
 async function getMessages(){
-	let url = `http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/messages`
-	let res = await axios.get(url);
+	let url = `${SERVER_BASE}/api/messages`
+	let res = await axios.get(url, {withCredentials: true});
 	return res.data;
+}
+
+async function postLoginForm(formData){
+	let url = `${SERVER_BASE}/api/login`
+	let res = await axios.postForm(url, formData);
+
+	if(res.data.success){
+		message.success("登录成功！");
+		return true;
+	}else{
+		message.error(res.data.message);
+		return false;
+	}
 }
 
 export default function UserBar(){
@@ -40,7 +53,26 @@ export default function UserBar(){
 	})
 
 	const openLogin = ()=>setLoginOpen(true);
-	const openUserCenter = ()=>navigate("/usercenter")
+	const openUserCenter = ()=>navigate("/usercenter");
+	const openAdmin = ()=>navigate("/admin");
+
+	const handleAvatarClick = ()=>{
+		if(userInfo.success){
+			if(userInfo.userinfo.is_admin){
+				openAdmin();
+			}else{
+				openUserCenter();
+			}
+		}else{
+			openLogin();
+		}
+	}
+
+	const handleLoginOk = ()=>{
+		updateUserInfo();
+		updateMessages();
+		setLoginOpen(false);
+	}
 
 	const updateUserInfo = async ()=>{
 		let userInfo = await getUserInfo();
@@ -74,9 +106,9 @@ export default function UserBar(){
 				onOpenChange={(newOpen)=>{setInfoOpen(newOpen && userInfo.success)}}
 				content={(<UserContent username={userInfo.userinfo.user_name}/>)}
 			>
-				<Avatar src={userInfo.userinfo.avatar} onClick={userInfo.success ? openUserCenter : openLogin} icon={<UserOutlined/>} style={{ cursor: "pointer" }}/>
+				<Avatar src={userInfo.userinfo.avatar} onClick={handleAvatarClick} icon={<UserOutlined/>} style={{ cursor: "pointer" }}/>
 			</Popover>
-            <Login open={loginOpen} onOk={()=>setLoginOpen(false)} onCancel={()=>setLoginOpen(false)}/>
+            <Login open={loginOpen} onOk={handleLoginOk} onCancel={()=>setLoginOpen(false)}/>
           </Space>
         </div>
     )
