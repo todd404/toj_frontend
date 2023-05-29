@@ -111,7 +111,7 @@ export default function CommentList({ focus }){
                         {item.content}
                     </List.Item>
                     {(item.reply_active && <CommentInput/>)}
-                    {(item.sub_comment_active && <SubCommnet focus={focus} commentId={item.id} onFoldCLick={ ()=>{handleActionClicks(item.id, "sub_comment")} }/>)}
+                    {(item.sub_comment_active && <SubCommnet focus={focus} parentId={item.id} onFoldCLick={ ()=>{handleActionClicks(item.id, "sub_comment")} }/>)}
                 </div>
             }
         />

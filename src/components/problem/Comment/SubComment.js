@@ -4,12 +4,13 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import * as CommentUtils from "./CommentUtils"
 
-const getData = async (commnet_id)=>{
-    let res = await axios.get(`http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/sub_comment?apipost_id=d6046a`)
+const getData = async (parent_id)=>{
+    let url = `${SERVER_BASE}/api/sub_comment`
+    let res = await axios.get(url, {data: {parent_id}})
     return res.data.data;
 }
 
-export default function SubCommnet({commnetId, onFoldCLick, focus}){
+export default function SubCommnet({parentId, onFoldCLick, focus}){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +20,7 @@ export default function SubCommnet({commnetId, onFoldCLick, focus}){
 
     const updateData = async ()=>{
         setLoading(true);
-        let data = await getData();
+        let data = await getData(parentId);
         setData(data);
         setLoading(false);
     }
