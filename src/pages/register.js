@@ -1,5 +1,6 @@
-import {Button, Form, Input} from "antd";
-import {useForm} from "_rc-field-form@1.29.2@rc-field-form"
+import {Button, Form, Input, message} from "antd";
+import axios from "axios";
+import md5 from "js-md5";
 
 const formItemLayout = {
     labelCol: {
@@ -33,15 +34,33 @@ const tailFormItemLayout = {
     },
 };
 
+const postRegisterForm = async (formData)=>{
+    let res = await axios.postForm(`${SERVER_BASE}/api/register`, formData);
+    let data = res.data;
+    if(!data.succuss){
+        message.error("注册失败！");
+    }else{
+        message.success("注册成功！");
+    }
+}
+
 export default function register() {
-    const [form] = useForm();
+    const [form] = Form.useForm();
+
+    const registerAccount = async (values)=>{
+        let {username, password} = values;
+        let formData = {username};
+
+        password = md5(password);
+        formData = {...formData, password};
+        postRegisterForm(formData);
+    }
+
     return (
         <Form
             {...formItemLayout}
             name="register"
-            onFinish={(values) => {
-                console.log(values)
-            }}
+            onFinish={registerAccount}
             autoComplete="off">
             <Form.Item
                 label="用户名"
