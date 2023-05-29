@@ -4,7 +4,8 @@ import ProblemsetTable from "../components/problemset/ProblemsetTable";
 import axios from "axios";
 
 async function getProblemset(){
-    let res = await axios("http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/problemset?apipost_id=1f490c")
+    let url = `${SERVER_BASE}/api/problemset`
+    let res = await axios(url)
     return res.data.problemset;
 }
 
