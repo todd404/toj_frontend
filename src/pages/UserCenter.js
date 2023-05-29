@@ -2,6 +2,7 @@ import {Avatar, Button, Form, Input, message, Upload} from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
+import md5 from "js-md5";
 
 const formItemLayout = {
     labelCol: {
@@ -36,41 +37,44 @@ const tailFormItemLayout = {
 };
 
 const getUserInfo = async ()=>{
-    let res = await axios.get("http://192.168.1.100:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/userinfo");
+    let url = `${SERVER_BASE}/api/userinfo`
+    let res = await axios.get(url);
     return res.data
 }
 
 //TODO: 密码md5处理
 const submitEdit = async (values)=>{
-    if(values.old_password && !values.new_password){
+    let {user_name, avatar, old_password, new_password} = values;
+
+    if(old_password && !new_password){
         message.error("请输入修改的新密码，如果不想修改请不要填写旧密码");
         return;
     }
 
-    if(!values.old_password && values.new_password){
+    if(!old_password && new_password){
         message.error("修改密码请输入旧密码");
         return;
     }
 
-    let formData = {};
-    formData["user_name"] = values["user_name"];
-    if(values.avatar){
-        if(values.avatar.file.status == "done"){
+    let formData = {user_name};
+    if(avatar){
+        if(avatar.file.status == "done"){
             formData["avatar_file_uuid"] = values.avatar.file.response.file_uuid;
         }
     }
-    if(values.old_password && values.new_password){
-        formData["old_password"] = values["old_password"];
-        formData["new_password"] = values["new_password"];
+    if(old_password && new_password){
+        old_password = md5(old_password);
+        new_password = md5(new_password);
+        formData = {...formData, old_password, new_password}
     }
 
-    let res = await axios.postForm(
-        `http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/user-edit`,
-        formData
-    );
-    console.log(formData)
+    console.log(formData);
+    let url = `${SERVER_BASE}/api/edit-userinfo`
+    let res = await axios.postForm(url, formData);
     if(!res.data.success){
         message.error(res.data.message);
+    }else{
+        message.info("修改成功！");
     }
 }
 
