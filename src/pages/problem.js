@@ -21,9 +21,7 @@ export default function problem(){
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     document.addEventListener('keydown', function(event) {
-        // 检查按下的键是否是Ctrl键和字母S（ASCII码为83）
         if (event.ctrlKey && event.key === "s") {
-          // 阻止默认行为
           event.preventDefault();
         }
     });
@@ -32,7 +30,6 @@ export default function problem(){
         let formData = {problemId: id, code, language};
         let uuid = await postJudge(formData);
         setUuid(uuid);
-        console.log(uuid);
     }
 
     useEffect(()=>{
@@ -72,7 +69,12 @@ export default function problem(){
                     />
                 </Panel>
             </PanelGroup>
-            <StateDrawer uuid={uuid} open={drawerOpen} onClose={()=>{setDrawerOpen(false)}} />
+
+            <StateDrawer 
+                uuid={uuid} 
+                open={drawerOpen} 
+                onClose={()=>{setDrawerOpen(false)}} 
+            />
         </div>
         
     )

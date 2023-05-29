@@ -21,18 +21,18 @@ const actions = [
 ];
 
 const getComments = async (problem_id)=>{
-    let res = await axios.get(`http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/comments?apipost_id=afb4a7&problem=${problem_id}`)
+    let url = `${SERVER_BASE}/api/comments`
+    let res = await axios.get(url, {data: {problem_id}})
     return res.data.data;
 }
 
-//components
 export default function CommentList({ focus }){
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const firstLoad = useRef(true)
-    const focused = useRef(false)
+    const firstLoad = useRef(true);
+    const focused = useRef(false);
 
     const handleActionClicks = (commentId, action)=>{
         let {result_data, focus_id} = CommentUtils.actionsProcess(commentId, action, data);

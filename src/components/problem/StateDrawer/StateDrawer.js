@@ -29,12 +29,17 @@ export default function StateDrawer({uuid, open, onClose}){
     const refreshState = async ()=>{
         let stateData = await getState(uuid);
         setStateData(stateData);
-        if(stateData.state.includes("success") || stateData.state.includes("error")){
+        if(
+            stateData.state.includes("success") || 
+            stateData.state.includes("error")
+        ){
             clearInterval(intervalId);
         }
     }
 
     useEffect(()=>{
+        if(!uuid)   return;
+        
         refreshState();
         intervalId = setInterval(()=>{
             refreshState();
