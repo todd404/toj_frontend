@@ -131,7 +131,7 @@ export default function UserCenter() {
                 name="avatar"
             >
                 <Upload
-                    action={`http://localhost:5000/upload`}
+                    action={`${SERVER_BASE}/api/upload`}
                     maxCount={1}
                 >
                     <Button icon={(<UploadOutlined/>)}>点击上传头像</Button>

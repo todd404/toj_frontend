@@ -36,7 +36,8 @@ const tailFormItemLayout = {
 };
 
 const getUserName = async (userid)=>{
-    let res = await axios.get("http://192.168.1.100:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/username");
+    let url = `${SERVER_BASE}/api/username`
+    let res = await axios.get(url, {data: {userid}});
     return res.data.username
 }
 

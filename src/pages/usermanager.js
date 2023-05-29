@@ -4,7 +4,8 @@ import axios from "axios";
 import UserManagerTable from "../components/admin/UserManager/UserManagerTable";
 
 async function getUserList(){
-    let res = await axios("http://localhost:10393/mock/9e9ed3f6-20a8-4c4f-8fa7-6181902f7308/api/userlist")
+    let url = `${SERVER_BASE}/api/userlist`
+    let res = await axios(url)
     return res.data.userlist;
 }
 
