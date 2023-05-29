@@ -42,7 +42,6 @@ const getUserInfo = async ()=>{
     return res.data
 }
 
-//TODO: 密码md5处理
 const submitEdit = async (values)=>{
     let {user_name, avatar, old_password, new_password} = values;
 
