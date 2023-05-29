@@ -81,7 +81,7 @@ export default function ProblemEditPage(){
                             name={"upload_answer"}
                         >
                             <Upload
-                                action={`http://localhost:5000/upload`}
+                                action={`${SERVER_BASE}/api/upload`}
                                 maxCount={1}
                             >
                                 <Button icon={(<UploadOutlined/>)}>上传答案</Button>
@@ -93,7 +93,7 @@ export default function ProblemEditPage(){
                             name={"upload_test"}
                         >
                             <Upload
-                                action={`http://localhost:5000/upload`}
+                                action={`${SERVER_BASE}/api/upload`}
                                 maxCount={1}
                             >
                                 <Button icon={(<UploadOutlined/>)}>上传测试用例</Button>
