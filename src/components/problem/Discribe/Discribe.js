@@ -35,7 +35,7 @@ export default function Discribe(){
 
     return(
         <Skeleton
-            {...loading}
+            loading={loading}
             active={true}
         >
             <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
