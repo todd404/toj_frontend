@@ -19,19 +19,6 @@ async function getMessages(){
 	return res.data;
 }
 
-async function postLoginForm(formData){
-	let url = `${SERVER_BASE}/api/login`
-	let res = await axios.postForm(url, formData);
-
-	if(res.data.success){
-		message.success("登录成功！");
-		return true;
-	}else{
-		message.error(res.data.message);
-		return false;
-	}
-}
-
 export default function UserBar(){
 	const navigate = useNavigate();
 
@@ -76,6 +63,7 @@ export default function UserBar(){
 
 	const updateUserInfo = async ()=>{
 		let userInfo = await getUserInfo();
+		console.log(userInfo);
 		if(!userInfo.success){
 			setUserInfo({
 				success: false, 
