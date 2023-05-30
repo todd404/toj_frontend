@@ -45,7 +45,5 @@ export default defineConfig({
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
   title: 'TOJ',
-  define: {
-    SERVER_BASE: "http://10.200.133.158:8080"
-  }
+  devtool: 'source-map'
 });

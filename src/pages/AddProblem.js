@@ -6,7 +6,8 @@ import { useState } from "react";
 import axios from "axios";
 
 const postAddProblemForm = async (formData)=>{
-    let res = await axios.postForm(`${SERVER_SOCKET}/api/add-problem`, formData);
+    let url = `/api/add-problem`
+    let res = await axios.postForm(url, formData);
 
     if(res.data.success){
         message.success("添加成功");

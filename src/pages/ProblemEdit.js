@@ -8,7 +8,8 @@ import axios from "axios";
 import { useParams } from "umi";
 
 const postEditForm = async (formData)=>{
-    let res = await axios.postForm(`${SERVER_SOCKET}/api/edit-problem`, formData);
+    let url = `/api/edit-problem`
+    let res = await axios.postForm(url, formData);
 
     if(res.data.success){
         message.success("编辑成功");
