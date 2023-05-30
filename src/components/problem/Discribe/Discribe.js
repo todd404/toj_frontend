@@ -22,7 +22,7 @@ export default function Discribe(){
     const [loading, setLoading] = useState(true);
 
     const updateDiscribe = async ()=>{
-        console.log(problem_id);
+        console.log(id);
         setLoading(true);
         let data = await getDiscribe(id);
         setProblemDiscribe(data);
