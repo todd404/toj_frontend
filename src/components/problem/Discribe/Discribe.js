@@ -6,6 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import { useParams } from "umi"
 
 const getDiscribe = async (problem_id)=>{
+    console.log(problem_id);
     let url = `/api/problem`;
     let res = await axios.get(url, {params:{problem_id}});
     if(res.data.success){
@@ -17,10 +18,11 @@ const getDiscribe = async (problem_id)=>{
 
 export default function Discribe(){
     const { id } = useParams();
-    const [problemDiscribe, setProblemDiscribe] = useState();
+    const [problemDiscribe, setProblemDiscribe] = useState("");
     const [loading, setLoading] = useState(true);
 
     const updateDiscribe = async ()=>{
+        console.log(problem_id);
         setLoading(true);
         let data = await getDiscribe(id);
         setProblemDiscribe(data);
@@ -29,7 +31,7 @@ export default function Discribe(){
 
     useEffect(()=>{
         updateDiscribe();
-    }, [problemDiscribe])
+    }, [])
 
     return(
         <Skeleton
