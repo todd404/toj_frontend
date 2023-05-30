@@ -1,9 +1,56 @@
-import { List } from "antd";
+import { Table } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "umi"
+
+const columns = [
+    {
+        title: "提交结果",
+        dataIndex: 'status',
+    },
+    {
+        title: "运行时间",
+        dataIndex: 'execute_time',
+        render: (time)=>`${time} ms`
+    },
+    {
+        title: "内存消耗",
+        dataIndex: 'memory',
+        render: (memory)=>`${memory} MB`
+    },
+    {
+        title: "语言",
+        dataIndex: 'language',
+    },
+    {
+        title: "提交时间",
+        dataIndex: 'submit_time',
+    }
+]
+
+const getHistoryData = async (problem_id)=>{
+    let url = `/api/history`
+    let res = await axios.get(url, {params:{problem_id}});
+    return res.data.data;
+}
 
 export default function HistoryList(){
+    const { id } = useParams();
+    const [data, setData] = useState([]);
+
+    const updateHistoryData = async ()=>{
+        let data = await getHistoryData(id);
+        setData(data);
+    }
+
+    useEffect(()=>{
+        updateHistoryData();
+    }, [])
+
     return(
-        <List>
-            
-        </List>
+        <Table
+            columns={columns}
+            dataSource={data}
+        />
     )
 }
