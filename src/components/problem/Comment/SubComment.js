@@ -6,7 +6,7 @@ import * as CommentUtils from "./CommentUtils"
 
 const getData = async (parent_id)=>{
     let url = `/api/sub_comment`
-    let res = await axios.get(url, {data: {parent_id}})
+    let res = await axios.get(url, {params: {parent_id}})
     return res.data.data;
 }
 
