@@ -21,7 +21,7 @@ const actions = [
 ];
 
 const getComments = async (problem_id)=>{
-    let url = `${SERVER_BASE}/api/comments`
+    let url = `/api/comments`
     let res = await axios.get(url, {data: {problem_id}})
     return res.data.data;
 }

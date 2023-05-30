@@ -35,13 +35,13 @@ const tailFormItemLayout = {
 };
 
 const autoLogin = async (formData)=>{
-    let url = `${SERVER_BASE}/api/login`
+    let url = `/api/login`
     await axios.postForm(url, formData);
     window.location = "/";
 }
 
 const postRegisterForm = async (formData)=>{
-    let url = `${SERVER_BASE}/api/register`
+    let url = `/api/register`
     let res = await axios.postForm(url, formData);
     let data = res.data;
     if(!data.succuss){

@@ -37,7 +37,7 @@ const tailFormItemLayout = {
 };
 
 const getUserInfo = async ()=>{
-    let url = `${SERVER_BASE}/api/userinfo`
+    let url = `/api/userinfo`
     let res = await axios.get(url);
     return res.data
 }
@@ -68,7 +68,7 @@ const submitEdit = async (values)=>{
     }
 
     console.log(formData);
-    let url = `${SERVER_BASE}/api/edit-userinfo`
+    let url = `/api/edit-userinfo`
     let res = await axios.postForm(url, formData);
     if(!res.data.success){
         message.error(res.data.message);
@@ -130,7 +130,7 @@ export default function UserCenter() {
                 name="avatar"
             >
                 <Upload
-                    action={`${SERVER_BASE}/api/upload`}
+                    action={`/api/upload`}
                     maxCount={1}
                 >
                     <Button icon={(<UploadOutlined/>)}>点击上传头像</Button>

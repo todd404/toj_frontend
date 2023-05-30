@@ -4,7 +4,7 @@ import axios from "axios";
 import UserManagerTable from "../components/admin/UserManager/UserManagerTable";
 
 async function getUserList(){
-    let url = `${SERVER_BASE}/api/userlist`
+    let url = `/api/userlist`
     let res = await axios(url)
     return res.data.userlist;
 }

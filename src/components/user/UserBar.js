@@ -8,18 +8,19 @@ import MessageList from "./MessageList"
 import {useNavigate} from "umi"
 
 async function getUserInfo(){
-	let url = `${SERVER_BASE}/api/userinfo`
+	let url = `/api/userinfo`
 	let res = await axios.get(url, {withCredentials: true});
 	return res.data;
 }
 
 async function getMessages(){
-	let url = `${SERVER_BASE}/api/messages`
+	let url = `/api/messages`
 	let res = await axios.get(url, {withCredentials: true});
 	return res.data;
 }
 
 export default function UserBar(){
+
 	const navigate = useNavigate();
 
     const [loginOpen, setLoginOpen] = useState(false);

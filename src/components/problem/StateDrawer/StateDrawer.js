@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const getState = async (uuid)=>{
-    let res = await axios.get(`${SERVER_BASE}/api/state`, {
+    let res = await axios.get(`/api/state`, {
         params: {uuid}
     })
 

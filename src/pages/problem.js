@@ -9,7 +9,7 @@ import axios from 'axios';
 import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 
 const postJudge = async (formData)=>{
-    let res = await axios.postForm(`${SERVER_BASE}/api/judge`, formData);
+    let res = await axios.postForm(`/api/judge`, formData);
     return res.data.uuid;
 }
 

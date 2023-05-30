@@ -19,7 +19,7 @@ const formItemLayout = {
 const postLoginForm = async ({username, password})=>{
     password = md5(password);
 
-    let url = `${SERVER_BASE}/api/login`
+    let url = `/api/login`
     let res = await axios.postForm(url, {username, password});
 
     if(!res.data.success){

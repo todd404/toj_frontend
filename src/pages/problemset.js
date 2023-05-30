@@ -4,7 +4,7 @@ import ProblemsetTable from "../components/problemset/ProblemsetTable";
 import axios from "axios";
 
 async function getProblemset(){
-    let url = `${SERVER_BASE}/api/problemset`
+    let url = `/api/problemset`
     let res = await axios(url)
     return res.data.problemset;
 }
