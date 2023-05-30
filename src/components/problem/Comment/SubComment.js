@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import * as CommentUtils from "./CommentUtils"
 
+
 const getData = async (parent_id)=>{
     let url = `/api/sub_comment`
     let res = await axios.get(url, {params: {parent_id}})

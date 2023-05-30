@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react'
 import axios from "axios";
 import CommentInput from "./CommentInput";
 import * as CommentUtils from "./CommentUtils"
+import { useParams } from "umi"
+
 
 const IconText = ({normalIcon, activeIcon, active, text, onClick, name, forComment})=>(
     <Space onClick={()=>{onClick(forComment, name)}} style={{cursor: "pointer"}}>
@@ -27,6 +29,7 @@ const getComments = async (problem_id)=>{
 }
 
 export default function CommentList({ focus }){
+    const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,9 +44,9 @@ export default function CommentList({ focus }){
         CommentUtils.focusComment(focus_id);
     }
 
-    const updateComments = async (problem_id)=>{
+    const updateComments = async ()=>{
         setLoading(true);
-        let data = await getComments(problem_id);
+        let data = await getComments(id);
         data = data.map((value)=>{
             let sub_comment_active = (value.id == focus.commentId ? true : false);
             let like_active = value.is_user_like;
