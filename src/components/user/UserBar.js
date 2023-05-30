@@ -64,7 +64,6 @@ export default function UserBar(){
 
 	const updateUserInfo = async ()=>{
 		let userInfo = await getUserInfo();
-		console.log(userInfo);
 		if(!userInfo.success){
 			setUserInfo({
 				success: false, 

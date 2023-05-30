@@ -64,7 +64,6 @@ export default function UserEdit() {
             name="edituser"
             onFinish={(values) => {
                 //TODO:可用化
-                console.log(values)
             }}
             autoComplete="off">
 

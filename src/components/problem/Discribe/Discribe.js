@@ -7,7 +7,7 @@ import { useParams } from "umi"
 
 const getDiscribe = async (problem_id)=>{
     let url = `/api/problem`;
-    let res = await axios.get(url, {params: {problem_id}});
+    let res = await axios.get(url, {params:{problem_id}});
     if(res.data.success){
         return res.data.content;
     }else{

@@ -67,7 +67,6 @@ const submitEdit = async (values)=>{
         formData = {...formData, old_password, new_password}
     }
 
-    console.log(formData);
     let url = `/api/edit-userinfo`
     let res = await axios.postForm(url, formData);
     if(!res.data.success){

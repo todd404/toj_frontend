@@ -6,7 +6,6 @@ export function getCommentPageNum(commentId, data){
 }
 
 export function focusComment(commentId){
-    debugger
     let selector = `#comment-${commentId}`;
 
     let ele = document.querySelector(selector);
