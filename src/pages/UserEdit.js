@@ -1,4 +1,4 @@
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, message} from "antd";
 import { useParams } from "umi"
 import { useEffect } from "react";
 import axios from "axios";
@@ -41,6 +41,16 @@ const getUserName = async (userid)=>{
     return res.data.username
 }
 
+const postEditUserForm = async (formData)=>{
+    let url = `/api/edit-user`
+    let res = await axios.postForm(url, formData);
+    if(res.data.success){
+        message.success("修改成功！");
+    }else{
+        message.success("修改失败！");
+    }
+}
+
 export default function UserEdit() {
     const [form] = Form.useForm();
     const { userid } = useParams();
@@ -50,6 +60,10 @@ export default function UserEdit() {
     async function formInit(){
         username = await getUserName(userid);
         form.setFieldsValue({username, userid});
+    }
+
+    const editUser = async (values)=>{
+        let result = await postEditUserForm(values)
     }
 
     useEffect(()=>{
@@ -62,9 +76,7 @@ export default function UserEdit() {
             form={form}
             {...formItemLayout}
             name="edituser"
-            onFinish={(values) => {
-                //TODO:可用化
-            }}
+            onFinish={editUser}
             autoComplete="off">
 
             <Form.Item
