@@ -3,7 +3,7 @@ import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Space,
 import MarkdownEditor from "../components/admin/ProblemEdit/MarkdownEditor";
 import "./css/ProblemEdit.css"
 import { UploadOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "umi";
 
@@ -65,6 +65,9 @@ export default function ProblemEditPage(){
             <Form
                 style={{ height: "100%", display: "flex", flexDirection: "column" }}
                 onFinish={submitEdit}
+                initialValues={{
+                    difficulty: "简单"
+                }}
             >
                 <Row style={{ padding: "12px 0 0 0" }}>
                     <Col span={1} style={{ alignSelf: "center", cursor:"pointer" }}>

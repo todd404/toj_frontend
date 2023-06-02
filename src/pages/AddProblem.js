@@ -44,7 +44,7 @@ export default function ProblemEditPage(){
 
         postAddProblemForm(formData);
     }
-    
+
     return(
         <ConfigProvider
             theme={{
@@ -58,6 +58,9 @@ export default function ProblemEditPage(){
             <Form
                 style={{ height: "100%", display: "flex", flexDirection: "column" }}
                 onFinish={submitEdit}
+                initialValues={{
+                    difficulty: "简单"
+                }}
             >
                 <Row style={{ padding: "12px 0 0 0" }}>
                     <Col span={10} offset={7} style={{alignSelf: "center"}}>
