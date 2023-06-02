@@ -74,6 +74,12 @@ export default function CommentList({ focus }){
         }
     }, [currentPage])
 
+    useEffect(()=>{
+        let page = CommentUtils.getCommentPageNum(focus.commentId, data);
+        setCurrentPage(page);
+        CommentUtils.focusComment(focus.commentId);
+    }, focus)
+
     useEffect(() => {
         updateComments();
     }, [])
