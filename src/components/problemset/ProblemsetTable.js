@@ -23,6 +23,7 @@ const columns = [
     {
         title: "难度",
         dataIndex: 'difficulty',
+        //TODO: 改成星数显示
         sorter: (a, b) => a.difficulty - b.difficulty,
     },
 ]

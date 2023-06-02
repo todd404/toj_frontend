@@ -31,9 +31,14 @@ export default function ProblemEditPage(){
             return;
         }
 
-        let { title, upload_answer, upload_test } = values;
+        let { title, upload_answer, upload_test, difficulty } = values;
+
+        if(!(difficulty >= 1 && difficulty <= 5)){
+            message.error("难度等级异常！");
+            return;
+        }
         
-        let formData = {problem_id: id, title, content};
+        let formData = {problem_id: id, title, content, difficulty};
 
         if(upload_answer){
             let answer_file = values.upload_answer.file;
@@ -66,7 +71,7 @@ export default function ProblemEditPage(){
                 style={{ height: "100%", display: "flex", flexDirection: "column" }}
                 onFinish={submitEdit}
                 initialValues={{
-                    difficulty: "简单"
+                    difficulty: 1
                 }}
             >
                 <Row style={{ padding: "12px 0 0 0" }}>
@@ -126,17 +131,25 @@ export default function ProblemEditPage(){
                         <Select
                             options={[
                                 {
-                                    value: "简单",
-                                    label: "简单"
+                                    value: 1,
+                                    label: "Level 1"
                                 },
                                 {
-                                    value: "中等",
-                                    label: "中等"
+                                    value: 2,
+                                    label: "Level 2"
                                 },
                                 {
-                                    value: "困难",
-                                    label: "困难"
-                                }
+                                    value: 3,
+                                    label: "Level 3"
+                                },
+                                {
+                                    value: 4,
+                                    label: "Level 4"
+                                },
+                                {
+                                    value: 5,
+                                    label: "Level 5"
+                                },
                             ]}
                         />
                     </Form.Item>
