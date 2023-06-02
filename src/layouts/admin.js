@@ -4,7 +4,7 @@ import {
   PlusCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Outlet, useSelectedRoutes, useNavigate } from "umi"
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -30,7 +30,7 @@ const items = [
 	getItem('用户管理', 'user-manager', <UserOutlined/>),
 ];
   
-
+//TODO: 验证是否为admin
 export default function Admin(){
     const [collapsed, setCollapsed] = useState(false);
     const [selected, setSelected] = useState("problem-manager");

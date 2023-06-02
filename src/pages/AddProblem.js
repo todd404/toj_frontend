@@ -1,4 +1,4 @@
-import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Space, Upload } from "antd";
+import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Select, Space, Upload } from "antd";
 import MarkdownEditor from "../components/admin/ProblemEdit/MarkdownEditor";
 import "./css/ProblemEdit.css"
 import { UploadOutlined } from "@ant-design/icons";
@@ -79,18 +79,6 @@ export default function ProblemEditPage(){
                 <Space  style={{ alignSelf: "center", overflow: "auto"}}>
                     <Space.Compact>
                         <Form.Item
-                            name={"upload_answer"}
-                        >
-                            <Upload
-                                action={`/api/upload`}
-                                maxCount={1}
-                            >
-                                <Button icon={(<UploadOutlined/>)}>上传答案</Button>
-                            </Upload>
-                        </Form.Item>
-                        
-
-                        <Form.Item
                             name={"upload_test"}
                         >
                             <Upload
@@ -100,7 +88,40 @@ export default function ProblemEditPage(){
                                 <Button icon={(<UploadOutlined/>)}>上传测试用例</Button>
                             </Upload>
                         </Form.Item>
+
+                        <Form.Item
+                            name={"upload_answer"}
+                        >
+                            <Upload
+                                action={`/api/upload`}
+                                maxCount={1}
+                            >
+                                <Button icon={(<UploadOutlined/>)}>上传答案</Button>
+                            </Upload>
+                        </Form.Item>
                     </Space.Compact>
+
+                    <Form.Item
+                        label="难度"
+                        name="difficulty"
+                    >
+                        <Select
+                            options={[
+                                {
+                                    value: "简单",
+                                    label: "简单"
+                                },
+                                {
+                                    value: "中等",
+                                    label: "中等"
+                                },
+                                {
+                                    value: "困难",
+                                    label: "困难"
+                                }
+                            ]}
+                        />
+                    </Form.Item>
 
                     <Form.Item>
                         <Button htmlType="submit">保存</Button>
