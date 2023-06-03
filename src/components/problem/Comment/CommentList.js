@@ -34,8 +34,8 @@ export default function CommentList({ focus }){
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const firstLoad = useRef(true);
-    const focused = useRef(false);
+    const lastFocus = useRef({});
+    const changeLastFocusFlag = useRef(false);
 
     const handleActionClicks = async (commentId, action)=>{
         let {result_data, focus_id} = await CommentUtils.actionsProcess(commentId, action, data);
@@ -49,7 +49,7 @@ export default function CommentList({ focus }){
         let data = await getComments(id);
         data = data.map((value)=>{
             //首次加载展开需要跳转的评论的子评论
-            let sub_comment_active = (value.id == focus.commentId && firstLoad.current ? true : false);
+            let sub_comment_active = ( (value.id == focus.commentId) && focus.subCommentId );
             let like_active = value.is_user_like;
             let reply_active = false;
             return { like_active, sub_comment_active, reply_active, ...value }
@@ -59,26 +59,27 @@ export default function CommentList({ focus }){
     }
 
     useEffect(()=>{
-        if(firstLoad.current){
+        if(JSON.stringify(lastFocus.current) != JSON.stringify(focus)){
             if(data.length > 0){
                 let page = CommentUtils.getCommentPageNum(focus.commentId, data);
+                changeLastFocusFlag.current = true;
                 setCurrentPage(page);
-                firstLoad.current = false;
             }
         }
     }, [data])
 
     useEffect(()=>{
-        if(!focused.current && !firstLoad.current){
+        if(
+            (JSON.stringify(lastFocus.current) != JSON.stringify(focus))
+            && changeLastFocusFlag.current
+        ){
             CommentUtils.focusComment(focus.commentId);
-            focused.current = true;
+            lastFocus.current = focus;
         }
     }, [currentPage])
 
     useEffect(()=>{
-        let page = CommentUtils.getCommentPageNum(focus.commentId, data);
-        setCurrentPage(page);
-        CommentUtils.focusComment(focus.commentId);
+        updateComments();
     }, [focus])
 
     useEffect(() => {

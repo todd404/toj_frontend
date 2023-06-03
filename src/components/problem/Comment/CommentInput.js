@@ -26,11 +26,13 @@ export default function CommentInput({ parent_id = 0 }){
         if(comment){
             let result = await postComment(id, parent_id, comment);
             if(result.success){
+                setComment("");
+
                 let data = result.data
                 if(data.parent_id == 0){
-                    navigate(`/problem/${id}/comment?comment=${data.comment_id}`)
+                    navigate(`/problem/${id}/comment?comment=${data.comment_id}`, {replace: true})
                 }else{
-                    navigate(`/problem/${id}/comment?comment=${data.parent_id}&subcomment=${data.comment_id}`)
+                    navigate(`/problem/${id}/comment?comment=${data.parent_id}&subcomment=${data.comment_id}`, {replace: true})
                 }
             }
         }
