@@ -22,7 +22,7 @@ export default function ProblemComment(){
 
         if(subCommentId){
             reportRead(subCommentId);
-        }else{
+        }else if(commentId){
             reportRead(commentId);
         }
 

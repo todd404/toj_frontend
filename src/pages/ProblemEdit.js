@@ -56,6 +56,10 @@ export default function ProblemEditPage(){
 
         postEditForm(formData);
     }
+
+    const initProblemContent = async()=>{
+        
+    }
     
     return(
         <ConfigProvider
