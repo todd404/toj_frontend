@@ -44,7 +44,7 @@ const postRegisterForm = async (formData)=>{
     let url = `/api/register`
     let res = await axios.postForm(url, formData);
     let data = res.data;
-    if(!data.succuss){
+    if(!data.success){
         message.error("注册失败！");
     }else{
         message.success("注册成功！一秒后自动登录！");

@@ -1,3 +1,6 @@
+import { message } from "antd";
+import axios from "axios";
+
 export const pageSize = 5;
 
 export function getCommentPageNum(commentId, data){
@@ -14,7 +17,7 @@ export function focusComment(commentId){
     }
 }
 
-export function actionsProcess( commentId, action, data ){
+export async function actionsProcess( commentId, action, data ){
     let result_data = null, focus_id = null;
     switch(action){
         case 'sub_comment':{
@@ -38,6 +41,28 @@ export function actionsProcess( commentId, action, data ){
             )))
             result_data = temp;
             break;
+        }
+        case 'like':{
+            let like = true;
+            for(let value of data){
+                if(value.id == commentId){
+                    like = value.like_active;
+                }
+            }
+
+            let res = await axios.postForm("/api/like_comment", {comment_id: commentId, is_like: !like});
+            if(res.data.success){
+                let temp = data.map((value=>(
+                    value.id == commentId ? {...value, like_active: !like, like: res.data.count} : value
+                )))
+
+                result_data = temp;
+                break;
+            }else{
+                message.error(res.data.message);
+                result_data = data;
+                break;
+            }
         }
             
     }

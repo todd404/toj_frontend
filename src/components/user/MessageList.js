@@ -13,8 +13,8 @@ export default function MessageList({data}){
                             <a style={{ display: "inline-block", overflow: "hidden", maxWidth: "10em",  whiteSpace: "nowrap", textOverflow: "ellipsis" }}
                                 href={
                                     item.parent_id == 0 ?
-                                    `/problem/${item.problem_id}/comment?comment=${item.parent_id}&subcomment=${item.comment_id}`:
-                                    `/problem/${item.problem_id}/comment?comment=${item.comment_id}`
+                                    `/problem/${item.problem_id}/comment?comment=${item.comment_id}`:
+                                    `/problem/${item.problem_id}/comment?comment=${item.parent_id}&subcomment=${item.comment_id}`
                                 }>
                                 {item.problem_title}
                             </a>

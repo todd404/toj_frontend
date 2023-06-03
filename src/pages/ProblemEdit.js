@@ -21,9 +21,21 @@ const postEditForm = async (formData)=>{
     }
 }
 
+const getProblem = async (problem_id)=>{
+    console.log(problem_id);
+    let url = `/api/problem`;
+    let res = await axios.get(url, {params:{problem_id}});
+    if(res.data.success){
+        return res.data;
+    }else{
+        message.error("获取问题描述失败！");
+    }
+}
+
 export default function ProblemEditPage(){
     const [content, setContent] = useState();
     const { id } = useParams();
+    const [form] = Form.useForm();
 
     const submitEdit = (values) => {
         if(!values.title || !content){
@@ -58,8 +70,14 @@ export default function ProblemEditPage(){
     }
 
     const initProblemContent = async()=>{
-        
+        let data = await getProblem(id);
+        form.setFieldsValue({title: data.title, difficulty: data.difficulty})
+        setContent(data.content);
     }
+
+    useEffect(()=>{
+        initProblemContent();
+    }, [])
     
     return(
         <ConfigProvider
@@ -77,6 +95,7 @@ export default function ProblemEditPage(){
                 initialValues={{
                     difficulty: 1
                 }}
+                form={form}
             >
                 <Row style={{ padding: "12px 0 0 0" }}>
                     <Col span={1} style={{ alignSelf: "center", cursor:"pointer" }}>

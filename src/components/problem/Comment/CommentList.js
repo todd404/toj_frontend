@@ -37,8 +37,8 @@ export default function CommentList({ focus }){
     const firstLoad = useRef(true);
     const focused = useRef(false);
 
-    const handleActionClicks = (commentId, action)=>{
-        let {result_data, focus_id} = CommentUtils.actionsProcess(commentId, action, data);
+    const handleActionClicks = async (commentId, action)=>{
+        let {result_data, focus_id} = await CommentUtils.actionsProcess(commentId, action, data);
 
         setData(result_data);
         CommentUtils.focusComment(focus_id);
@@ -48,7 +48,8 @@ export default function CommentList({ focus }){
         setLoading(true);
         let data = await getComments(id);
         data = data.map((value)=>{
-            let sub_comment_active = (value.id == focus.commentId ? true : false);
+            //首次加载展开需要跳转的评论的子评论
+            let sub_comment_active = (value.id == focus.commentId && firstLoad.current ? true : false);
             let like_active = value.is_user_like;
             let reply_active = false;
             return { like_active, sub_comment_active, reply_active, ...value }
@@ -78,7 +79,7 @@ export default function CommentList({ focus }){
         let page = CommentUtils.getCommentPageNum(focus.commentId, data);
         setCurrentPage(page);
         CommentUtils.focusComment(focus.commentId);
-    }, focus)
+    }, [focus])
 
     useEffect(() => {
         updateComments();
