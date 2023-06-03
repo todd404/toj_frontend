@@ -7,6 +7,9 @@ import { defineConfig } from "umi";
 export default defineConfig({
   routes: [
     { path: "/", component: "problemset" },
+    {
+      path: "/problemset", component: "problemset"
+    },
     { 
       path: "/problem/:id", 
       component: "problem",

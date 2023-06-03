@@ -5,13 +5,14 @@ import { Layout, Menu, } from 'antd';
 import { BuildTwoTone } from '@ant-design/icons'
 import UserBar from '../components/user/UserBar';
 const { Header, Content, Footer } = Layout;
-import { useSelectedRoutes } from "umi"
+import { useSelectedRoutes, useNavigate } from "umi"
 import Admin from './admin';
 
-
-//TODO: 菜单项与路由对应
 export default function Home() {
   const routes = useSelectedRoutes();
+  const navigate = useNavigate();
+
+  console.log(routes)
 
   if(routes[1].route.path.includes("admin")){
     return (<Admin></Admin>)
@@ -24,8 +25,9 @@ export default function Home() {
         <Menu
           theme='light'
           mode="horizontal"
-          defaultSelectedKeys={['1']}
-          items={[{key: 1, label: "题库"}]}
+          items={[{key: "problemset", label: "题库"}]}
+          selectedKeys={[]}
+          onSelect={({key})=>navigate(key)}
           style={{ flexGrow: "2" }}
         />
         <UserBar/>

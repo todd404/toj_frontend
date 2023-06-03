@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { Outlet, useSelectedRoutes, useNavigate } from "umi"
+import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -29,8 +30,7 @@ const items = [
 	getItem('添加问题', 'add-problem', <PlusCircleOutlined/>),
 	getItem('用户管理', 'user-manager', <UserOutlined/>),
 ];
-  
-//TODO: 验证是否为admin
+
 export default function Admin(){
     const [collapsed, setCollapsed] = useState(false);
     const [selected, setSelected] = useState("problem-manager");
@@ -41,6 +41,16 @@ export default function Admin(){
     const onSelectedChange = (key)=>{
       navigate(`/admin/${key}`);
     }
+
+    const verifyAdmin = async ()=>{
+      let url = `/api/userinfo`;
+      let res = await axios.get(url);
+      if(!res.data.success || !res.data.userinfo.is_admin){
+        location = "/";
+      }
+    }
+
+    verifyAdmin();
 
     useEffect(()=>{
       let path = routes.lastItem.route.path;
