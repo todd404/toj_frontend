@@ -41,6 +41,9 @@ export default defineConfig({
     {
       path: "/usercenter", component: "UserCenter"
     },
+    {
+      path: "/*", component: "404"
+    }
   ],
   npmClient: 'cnpm',
   esbuildMinifyIIFE: true,
