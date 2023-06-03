@@ -2,6 +2,7 @@ import {Button, Form, Input, message} from "antd";
 import { useParams } from "umi"
 import { useEffect } from "react";
 import axios from "axios";
+import md5 from "js-md5";
 
 const formItemLayout = {
     labelCol: {
@@ -63,7 +64,8 @@ export default function UserEdit() {
     }
 
     const editUser = async (values)=>{
-        let result = await postEditUserForm(values)
+        values = {...values, password: md5(password)}
+        let result = await postEditUserForm(values);
     }
 
     useEffect(()=>{
