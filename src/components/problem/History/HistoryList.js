@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "umi"
@@ -7,6 +7,12 @@ const columns = [
     {
         title: "提交结果",
         dataIndex: 'status',
+        render: (stat)=>{
+            let type = stat == "通过" ? "success" : "warning";
+            return(
+                <Typography.Text type={type}>{stat}</Typography.Text>
+            )
+        }
     },
     {
         title: "运行时间",
