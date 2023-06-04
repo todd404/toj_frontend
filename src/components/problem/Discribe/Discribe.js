@@ -2,8 +2,10 @@ import { message, Skeleton } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {okaidia} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useParams } from "umi"
+import "./markdown.css"
 
 const getDiscribe = async (problem_id)=>{
     console.log(problem_id);
@@ -38,9 +40,28 @@ export default function Discribe(){
             loading={loading}
             active={true}
         >
-            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-                {problemDiscribe}
-            </ReactMarkdown>
+            <ReactMarkdown
+                children={problemDiscribe}
+                className="markdown"
+                components={{
+                    code({node, inline, className, children, ...props}) {
+                        const match = /language-(\w+)/.exec(className || '')
+                        return !inline && match ? (
+                            <SyntaxHighlighter
+                                {...props}
+                                children={String(children).replace(/\n$/, '')}
+                                style={okaidia}
+                                language={match[1]}
+                                PreTag="div"
+                            />
+                        ) : (
+                            <code {...props} className={className}>
+                                {children}
+                            </code>
+                        )
+                    }
+                }}
+            />
         </Skeleton> 
     )
 }

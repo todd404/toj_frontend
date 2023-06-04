@@ -1,0 +1,50 @@
+.markdown blockquote {
+    position: relative;
+    background: #f9f9f9;
+    background: linear-gradient(to right, #ebebeb 0%, #f9f9f9 100%);
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+  }
+  
+  .markdown blockquote:before {
+    
+    /* Font */
+    font-family: Georgia, serif;
+    font-size: 60px;
+    font-weight: bold;
+    
+    /* Position */
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    
+    /* Color */
+    color: white;
+  }
+  
+  .markdown blockquote p {
+    display: inline;
+  }
+  
+  .markdown blockquote p:before {
+      content: "";
+      display: block;
+      height: 10px;
+      margin-top: -10px;
+      visibility: hidden;
+  }
+  
+  .markdown blockquote p:after {
+      content: "";
+      display: block;
+      height: 10px;
+      margin-bottom: -10px;
+      visibility: hidden;
+  }
+  
+  .markdown blockquote p {
+      font-family: 'Open Sans', sans-serif; /* You need to import this font in your project */
+      font-style: italic; /* You can change this to normal if you don't like italic */
+  }
+  

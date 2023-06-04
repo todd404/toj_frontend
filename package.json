@@ -19,6 +19,7 @@
     "js-md5": "^0.7.3",
     "react-markdown": "^8.0.7",
     "react-resizable-panels": "^0.0.41",
+    "react-syntax-highlighter": "^15.5.0",
     "rehype-highlight": "^6.0.0",
     "umi": "^4.0.66"
   },
