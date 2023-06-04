@@ -1,5 +1,5 @@
 import { CheckCircleTwoTone, CloseCircleTwoTone, LoadingOutlined } from "@ant-design/icons";
-import { Divider, Drawer, Typography } from "antd";
+import { Divider, Drawer, message, Typography } from "antd";
 const { Paragraph } = Typography;
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -30,17 +30,27 @@ export default function StateDrawer({uuid, open, onClose}){
     const refreshState = async ()=>{
         let stateData = await getState(uuid);
         setStateData(stateData);
-        if(
-            stateData.state.includes("success") || 
-            stateData.state.includes("error")
-        ){
+
+        const state = stateData.state;
+        if (state.includes("success")) {
+            message.destroy("judging-message");
             clearInterval(intervalId);
+            message.success("判题通过!");
+        } else if (state.includes("error")) {
+            message.destroy("judging-message");
+            clearInterval(intervalId);
+            message.error("判题失败!");
         }
     }
 
     useEffect(()=>{
         if(!uuid)   return;
         
+        message.loading({
+            content: "判题中...",
+            key: "judging-message",
+            duration: 0,
+        })
         refreshState();
         intervalId = setInterval(()=>{
             refreshState();
@@ -52,7 +62,6 @@ export default function StateDrawer({uuid, open, onClose}){
             {...{open}}
             onClose={()=>{clearInterval(intervalId); onClose();}}
             title="判题结果"
-            maskClosable={false}
         >
             <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <StateIcon state={stateData.state} style={{ fontSize: "64px" }} />

@@ -27,6 +27,10 @@ const postLoginForm = async ({username, password})=>{
         return false;
     }else{
         message.success("登录成功！");
+        const path = location.pathname;
+        if(path == "/" || path == "/problemset"){
+            location = "/";
+        }
         return true;
     }
 }

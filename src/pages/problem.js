@@ -4,7 +4,7 @@ import ProblemContent from '../components/problem/ProblemContent';
 import ResizeHandle from '../components/problem/ResizeHandle';
 import { useEffect, useState } from 'react';
 import CodeEditor from '../components/problem/CodeEditor';
-import { message } from 'antd';
+import { FloatButton, message } from 'antd';
 import axios from 'axios';
 import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 
@@ -76,6 +76,7 @@ export default function problem(){
                 open={drawerOpen} 
                 onClose={()=>{setDrawerOpen(false)}} 
             />
+            {uuid ? <FloatButton onClick={()=>setDrawerOpen(true)}/> : null}
         </div>
         
     )

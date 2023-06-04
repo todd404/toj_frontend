@@ -1,4 +1,4 @@
-import { Table } from 'antd'
+import { Rate, Table } from 'antd'
 import ProblemCheckIcon from './ProblemCheckIcon'
 import ProblemLink from './ProblemLink'
 
@@ -23,7 +23,7 @@ const columns = [
     {
         title: "难度",
         dataIndex: 'difficulty',
-        //TODO: 改成星数显示
+        render: (difficulty)=><Rate disabled defaultValue={difficulty}/>,
         sorter: (a, b) => a.difficulty - b.difficulty,
     },
 ]
