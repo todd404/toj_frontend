@@ -55,20 +55,20 @@ const submitEdit = async (values)=>{
         return;
     }
 
-    let formData = {user_name};
+    let data = {user_name};
     if(avatar){
         if(avatar.file.status == "done"){
-            formData["avatar_file_uuid"] = values.avatar.file.response.file_uuid;
+            data["avatar_file_uuid"] = values.avatar.file.response.file_uuid;
         }
     }
     if(old_password && new_password){
         old_password = md5(old_password);
         new_password = md5(new_password);
-        formData = {...formData, old_password, new_password}
+        data = {...data, old_password, new_password}
     }
 
     let url = `/api/edit-userinfo`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
     if(!res.data.success){
         message.error(res.data.message);
     }else{

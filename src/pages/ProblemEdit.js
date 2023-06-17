@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "umi";
 
-const postEditForm = async (formData)=>{
+const postEditForm = async (data)=>{
     let url = `/api/edit-problem`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
 
     if(res.data.success){
         message.success("编辑成功");

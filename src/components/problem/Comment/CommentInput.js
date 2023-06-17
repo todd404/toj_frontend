@@ -7,7 +7,7 @@ const { TextArea } = Input
 
 const postComment = async (problem_id, parent_id, comment)=>{
     let url = `/api/submit_comment`
-    let res = await axios.postForm(url, {problem_id, parent_id, comment});
+    let res = await axios.post(url, {problem_id, parent_id, comment});
     if(res.data.success){
         message.success("评论提交成功！");
         return res.data;

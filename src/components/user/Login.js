@@ -20,7 +20,7 @@ const postLoginForm = async ({username, password})=>{
     password = md5(password);
 
     let url = `/api/login`
-    let res = await axios.postForm(url, {username, password});
+    let res = await axios.post(url, {username, password});
 
     if(!res.data.success){
         message.error(res.data.message);

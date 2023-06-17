@@ -8,9 +8,9 @@ import { FloatButton, message } from 'antd';
 import axios from 'axios';
 import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 
-const postJudge = async (formData)=>{
+const postJudge = async (data)=>{
     let url = `/api/judge`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
     return res.data.uuid;
 }
 

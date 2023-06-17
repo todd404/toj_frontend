@@ -34,15 +34,15 @@ const tailFormItemLayout = {
     },
 };
 
-const autoLogin = async (formData)=>{
+const autoLogin = async (data)=>{
     let url = `/api/login`
-    await axios.postForm(url, formData);
+    await axios.post(url, data);
     window.location = "/";
 }
 
-const postRegisterForm = async (formData)=>{
+const postRegisterForm = async (data)=>{
     let url = `/api/register`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
     let data = res.data;
     if(!data.success){
         message.error("注册失败！");

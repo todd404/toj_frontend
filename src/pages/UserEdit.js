@@ -42,9 +42,9 @@ const getUserName = async (userid)=>{
     return res.data.username
 }
 
-const postEditUserForm = async (formData)=>{
+const postEditUserForm = async (data)=>{
     let url = `/api/edit-user`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
     if(res.data.success){
         message.success("修改成功！");
     }else{

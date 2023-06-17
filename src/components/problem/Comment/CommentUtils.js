@@ -50,7 +50,7 @@ export async function actionsProcess( commentId, action, data ){
                 }
             }
 
-            let res = await axios.postForm("/api/like_comment", {comment_id: commentId, is_like: !like});
+            let res = await axios.post("/api/like_comment", {comment_id: commentId, is_like: !like});
             if(res.data.success){
                 let temp = data.map((value=>(
                     value.id == commentId ? {...value, like_active: !like, like: res.data.count} : value

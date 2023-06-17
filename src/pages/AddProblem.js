@@ -5,9 +5,9 @@ import { UploadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import axios from "axios";
 
-const postAddProblemForm = async (formData)=>{
+const postAddProblemForm = async (data)=>{
     let url = `/api/add-problem`
-    let res = await axios.postForm(url, formData);
+    let res = await axios.post(url, data);
 
     if(res.data.success){
         message.success("添加成功");
