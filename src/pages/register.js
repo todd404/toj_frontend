@@ -40,16 +40,16 @@ const autoLogin = async (data)=>{
     window.location = "/";
 }
 
-const postRegisterForm = async (data)=>{
+const postRegisterForm = async (postData)=>{
     let url = `/api/register`
-    let res = await axios.post(url, data);
+    let res = await axios.post(url, postData);
     let data = res.data;
     if(!data.success){
-        message.error("注册失败！");
+        message.error(data.message);
     }else{
         message.success("注册成功！一秒后自动登录！");
         setTimeout(()=>{
-            autoLogin();
+            autoLogin(postData);
         }, 1000)
     }
 }
