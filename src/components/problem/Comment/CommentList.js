@@ -82,10 +82,6 @@ export default function CommentList({ focus }){
         updateComments();
     }, [focus])
 
-    useEffect(() => {
-        updateComments();
-    }, [])
-
     return (
         <List
             itemLayout="vertical"
