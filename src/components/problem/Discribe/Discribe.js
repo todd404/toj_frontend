@@ -14,7 +14,7 @@ const getDiscribe = async (problem_id)=>{
     if(res.data.success){
         return res.data.content;
     }else{
-        message.error("获取问题描述失败！");
+        message.error(res.data.message);
     }
 }
 

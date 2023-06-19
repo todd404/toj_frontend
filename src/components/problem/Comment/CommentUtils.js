@@ -57,12 +57,11 @@ export async function actionsProcess( commentId, action, data ){
                 )))
 
                 result_data = temp;
-                break;
             }else{
                 message.error(res.data.message);
                 result_data = data;
-                break;
             }
+            break;
         }
             
     }

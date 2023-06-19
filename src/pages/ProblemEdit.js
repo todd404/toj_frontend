@@ -17,7 +17,7 @@ const postEditForm = async (data)=>{
             history.back();
         }, 1000)
     }else{
-        message.error("编辑失败");
+        message.error(res.data.message);
     }
 }
 

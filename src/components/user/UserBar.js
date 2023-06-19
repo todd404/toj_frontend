@@ -64,18 +64,7 @@ export default function UserBar(){
 
 	const updateUserInfo = async ()=>{
 		let userInfo = await getUserInfo();
-		if(!userInfo.success){
-			setUserInfo({
-				success: false, 
-				userinfo:{
-				"user_id": -1,
-				"user_name": "",
-				"is_admin": false,
-				"avatar": "",
-				"message_count": 0}
-			});
-			return;
-		}
+		
 		setUserInfo(userInfo);
 	}
 

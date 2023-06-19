@@ -48,7 +48,7 @@ const postEditUserForm = async (data)=>{
     if(res.data.success){
         message.success("修改成功！");
     }else{
-        message.success("修改失败！");
+        message.success(res.data.message);
     }
 }
 
@@ -64,7 +64,7 @@ export default function UserEdit() {
     }
 
     const editUser = async (values)=>{
-        values = {...values, password: md5(password)}
+        values = {...values, password: md5(values.password)}
         let result = await postEditUserForm(values);
     }
 

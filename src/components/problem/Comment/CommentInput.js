@@ -12,7 +12,7 @@ const postComment = async (problem_id, parent_id, comment)=>{
         message.success("评论提交成功！");
         return res.data;
     }else{
-        message.error("评论提交失败！");
+        message.error(res.data.message);
         return res.data;
     }
 }
