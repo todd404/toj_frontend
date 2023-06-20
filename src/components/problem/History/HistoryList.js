@@ -17,12 +17,12 @@ const columns = [
     {
         title: "运行时间",
         dataIndex: 'execute_time',
-        render: (time)=>`${time} ms`
+        render: (time)=>(time==-1)?"N/A":`${time} ms`
     },
     {
         title: "内存消耗",
         dataIndex: 'memory',
-        render: (memory)=>`${memory} MB`
+        render: (memory)=>(memory==-1)?"N/A":`${memory} KB`
     },
     {
         title: "语言",

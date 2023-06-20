@@ -11,7 +11,7 @@ import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 const postJudge = async (data)=>{
     let url = `/api/judge`
     let res = await axios.post(url, data);
-    return res.data.uuid;
+    return res;
 }
 
 export default function problem(){
@@ -28,9 +28,14 @@ export default function problem(){
     });
 
     const onSubmitClick = async ()=>{
-        let formData = {problemId: id, code, language};
-        let uuid = await postJudge(formData);
-        setUuid(uuid);
+        let formData = {problem_id: id, code, language};
+        let res = await postJudge(formData);
+        if(!res.data.success){
+            message.error(res.data.message);
+            return;
+        }
+
+        setUuid(res.data.uuid);
     }
 
     useEffect(()=>{
