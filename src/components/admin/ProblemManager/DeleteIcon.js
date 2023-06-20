@@ -2,6 +2,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 export default function DeleteIcon({onClick}){
     return(
-        <DeleteOutlined onClick={onClick}/>
+        <DeleteOutlined style={{cursor: "pointer"}} onClick={onClick}/>
     )
 }
