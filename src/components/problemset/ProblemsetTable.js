@@ -6,7 +6,8 @@ const columns = [
     {
         title: "状态",
         dataIndex: 'state',
-        render: (_, {state})=>state?<ProblemCheckIcon />:<div></div>
+        render: (_, {state})=>state?<ProblemCheckIcon />:<div></div>,
+        sorter: (a, b) => a.state - b.state
     },
     {
         title: "题目",
@@ -25,6 +26,7 @@ const columns = [
         dataIndex: 'difficulty',
         render: (difficulty)=><Rate disabled defaultValue={difficulty}/>,
         sorter: (a, b) => a.difficulty - b.difficulty,
+        width: "18em"
     },
 ]
 
