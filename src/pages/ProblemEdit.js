@@ -6,7 +6,6 @@ import { UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "umi";
-import LimitInput from "../components/admin/ProblemEdit/LimitInput";
 
 const postEditForm = async (data)=>{
     let url = `/api/edit-problem`
@@ -39,19 +38,14 @@ export default function ProblemEditPage(){
     const [form] = Form.useForm();
 
     const submitEdit = (values) => {
-        if(!values.title || !content){
-            message.error("标题和内容不能为空！");
+        if(!content){
+            message.error("内容不能为空！");
             return;
         }
 
-        let { title, upload_answer, upload_test, difficulty } = values;
-
-        if(!(difficulty >= 1 && difficulty <= 5)){
-            message.error("难度等级异常！");
-            return;
-        }
+        let { title, upload_answer, upload_test, difficulty, time_limit, memory_limit } = values;
         
-        let formData = {problem_id: id, title, content, difficulty};
+        let formData = {problem_id: id, title, content, difficulty, time_limit, memory_limit};
 
         if(upload_answer){
             let answer_file = values.upload_answer.file;
@@ -72,7 +66,7 @@ export default function ProblemEditPage(){
 
     const initProblemContent = async()=>{
         let data = await getProblem(id);
-        form.setFieldsValue({title: data.title, difficulty: data.difficulty})
+        form.setFieldsValue(data)
         setContent(data.content);
     }
 
@@ -106,6 +100,10 @@ export default function ProblemEditPage(){
                         <Form.Item
                             name={"title"}
                             label="标题"
+                            rules={[{
+                                required: true,
+                                message: "标题不能为空!"
+                            }]}
                         >
                             <Input style={{ minWidth: "22em" }}/>
                         </Form.Item>
@@ -114,6 +112,12 @@ export default function ProblemEditPage(){
                         <Form.Item
                             name="time_limit"
                             label="时间限制"
+                            rules={[{
+                                type: "number",
+                                required: true,
+                                min: 0,
+                                message: "请输入正确的时间限制: 大于零的浮点数"
+                            }]}
                         >
                             <InputNumber
                                 controls={false}
@@ -125,6 +129,12 @@ export default function ProblemEditPage(){
                         <Form.Item
                             name="memory_limit"
                             label="内存限制"
+                            rules={[{
+                                type: "integer",
+                                required: true,
+                                min: 0,
+                                message: "请输入正确的内存限制: 大于零的整数"
+                            }]}
                         >
                             <InputNumber
                                 controls={false}
@@ -173,6 +183,10 @@ export default function ProblemEditPage(){
                     <Form.Item
                         label="难度"
                         name="difficulty"
+                        rules={[{
+                            required: true,
+                            pattern: /^[1-5]$/
+                        }]}
                     >
                         <Select
                             options={[

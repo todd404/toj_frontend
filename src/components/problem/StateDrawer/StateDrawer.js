@@ -26,10 +26,15 @@ const StateIcon = function ({state, style}){
 export default function StateDrawer({uuid, open, onClose}){
     const [stateData, setStateData] = useState({state: "", message: ""});
     let intervalId;
+    let isJudingMessageDestory = true;
 
     const refreshState = async ()=>{
         let stateData = await getState(uuid);
         setStateData(stateData);
+
+        if(isJudingMessageDestory){
+            return;
+        }
 
         const state = stateData.state;
         if (state.includes("success")) {
@@ -46,10 +51,12 @@ export default function StateDrawer({uuid, open, onClose}){
     useEffect(()=>{
         if(!uuid)   return;
         
+        isJudingMessageDestory = false;
         message.loading({
             content: "判题中...",
             key: "judging-message",
             duration: 0,
+            onClose: ()=>isJudingMessageDestory = true
         })
         refreshState();
         intervalId = setInterval(()=>{

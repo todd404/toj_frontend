@@ -1,4 +1,4 @@
-import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Select, Space, Upload } from "antd";
+import { Button, Col, ConfigProvider, Divider, Form, Input, InputNumber, message, Row, Select, Space, Upload } from "antd";
 import MarkdownEditor from "../components/admin/ProblemEdit/MarkdownEditor";
 import "./css/ProblemEdit.css"
 import { UploadOutlined } from "@ant-design/icons";
@@ -23,9 +23,9 @@ export default function ProblemEditPage(){
     const [content, setContent] = useState();
 
     const submitEdit = (values) => {
-        let { title, upload_answer, upload_test, difficulty } = values;
-        if(!title || !content){
-            message.error("标题和内容不能为空！");
+        let { title, upload_answer, upload_test, difficulty, time_limit, memory_limit } = values;
+        if(!content){
+            message.error("内容不能为空！");
             return;
         }
 
@@ -33,13 +33,8 @@ export default function ProblemEditPage(){
             message.error("必须上传测试和答案文件！");
             return;
         }
-
-        if(!(difficulty >= 1 && difficulty <= 5)){
-            message.error("难度等级异常！");
-            return;
-        }
         
-        let formData = { title, content, difficulty };
+        let formData = { title, content, difficulty, time_limit, memory_limit };
         
         let answer_file = upload_answer.file;
         let test_file = upload_test.file;
@@ -68,12 +63,50 @@ export default function ProblemEditPage(){
                 }}
             >
                 <Row style={{ padding: "12px 0 0 0" }}>
-                    <Col span={10} offset={7} style={{alignSelf: "center"}}>
+                    <Col span={10} offset={2} style={{alignSelf: "center"}}>
                         <Form.Item
                             name={"title"}
                             label="标题"
+                            rules={[{
+                                required: true,
+                                message: "标题不能为空!"
+                            }]}
                         >
                             <Input style={{ minWidth: "22em" }}/>
+                        </Form.Item>
+                    </Col>
+                    <Col offset={1} span={4}>
+                        <Form.Item
+                            name="time_limit"
+                            label="时间限制"
+                            rules={[{
+                                type: "number",
+                                required: true,
+                                min: 0,
+                                message: "请输入正确的时间限制: 大于零的浮点数"
+                            }]}
+                        >
+                            <InputNumber
+                                controls={false}
+                                addonAfter="ms"
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col offset={2} span={4}>
+                        <Form.Item
+                            name="memory_limit"
+                            label="内存限制"
+                            rules={[{
+                                type: "integer",
+                                required: true,
+                                min: 0,
+                                message: "请输入正确的内存限制: 大于零的整数"
+                            }]}
+                        >
+                            <InputNumber
+                                controls={false}
+                                addonAfter="KB"
+                            />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -112,6 +145,10 @@ export default function ProblemEditPage(){
                     <Form.Item
                         label="难度"
                         name="difficulty"
+                        rules={[{
+                            required: true,
+                            pattern: /^[1-5]$/
+                        }]}
                     >
                         <Select
                             options={[
