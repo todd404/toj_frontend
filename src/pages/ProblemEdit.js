@@ -1,11 +1,12 @@
 import { DownloadOutlined, LeftCircleTwoTone } from "@ant-design/icons";
-import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Space, Upload, Select } from "antd";
+import { Button, Col, ConfigProvider, Divider, Form, Input, message, Row, Space, Upload, Select, InputNumber } from "antd";
 import MarkdownEditor from "../components/admin/ProblemEdit/MarkdownEditor";
 import "./css/ProblemEdit.css"
 import { UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "umi";
+import LimitInput from "../components/admin/ProblemEdit/LimitInput";
 
 const postEditForm = async (data)=>{
     let url = `/api/edit-problem`
@@ -101,12 +102,34 @@ export default function ProblemEditPage(){
                     <Col span={1} style={{ alignSelf: "center", cursor:"pointer" }}>
                         <LeftCircleTwoTone style={{ fontSize: "24px" }} onClick={()=>{history.back()}}/>
                     </Col>
-                    <Col span={10} offset={7} style={{alignSelf: "center"}}>
+                    <Col span={10} offset={2} style={{alignSelf: "center"}}>
                         <Form.Item
                             name={"title"}
                             label="标题"
                         >
                             <Input style={{ minWidth: "22em" }}/>
+                        </Form.Item>
+                    </Col>
+                    <Col offset={1} span={4}>
+                        <Form.Item
+                            name="time_limit"
+                            label="时间限制"
+                        >
+                            <InputNumber
+                                controls={false}
+                                addonAfter="ms"
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col offset={2} span={4}>
+                        <Form.Item
+                            name="memory_limit"
+                            label="内存限制"
+                        >
+                            <InputNumber
+                                controls={false}
+                                addonAfter="KB"
+                            />
                         </Form.Item>
                     </Col>
                 </Row>
