@@ -8,7 +8,6 @@ import { useParams } from "umi"
 import "./markdown.css"
 
 const getDiscribe = async (problem_id)=>{
-    console.log(problem_id);
     let url = `/api/problem`;
     let res = await axios.get(url, {params:{problem_id}});
     if(res.data.success){
@@ -24,7 +23,6 @@ export default function Discribe(){
     const [loading, setLoading] = useState(true);
 
     const updateDiscribe = async ()=>{
-        console.log(id);
         setLoading(true);
         let data = await getDiscribe(id);
         setProblemDiscribe(data);

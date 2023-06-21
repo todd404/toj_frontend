@@ -12,8 +12,6 @@ export default function Home() {
   const routes = useSelectedRoutes();
   const navigate = useNavigate();
 
-  console.log(routes)
-
   if(routes[1].route.path.includes("admin")){
     return (<Admin></Admin>)
   }

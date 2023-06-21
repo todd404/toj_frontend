@@ -57,6 +57,7 @@ export default function HistoryList(){
         <Table
             columns={columns}
             dataSource={data}
+            rowKey={(record) => record.id}
         />
     )
 }

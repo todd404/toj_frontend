@@ -22,7 +22,6 @@ const postEditForm = async (data)=>{
 }
 
 const getProblem = async (problem_id)=>{
-    console.log(problem_id);
     let url = `/api/problem`;
     let res = await axios.get(url, {params:{problem_id}});
     if(res.data.success){
