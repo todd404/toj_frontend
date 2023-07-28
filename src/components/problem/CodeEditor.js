@@ -4,6 +4,17 @@ import { Tabs, Select, Button } from "antd";
 import { useEffect, useState } from "react";
 import './css/CodeEditor.css'
 
+import { languageServer } from 'codemirror-languageserver';
+
+var ls = languageServer({
+	// WebSocket server uri and other client options.
+	serverUri: "ws://localhost:3000/cpp",
+	rootUri: 'file://~/lgs/ccls/save_files',
+
+	documentUri: `file://~/lgs/ccls/save_files/main.cpp`,
+	languageId: 'cpp' // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
+});
+
 //TODO:可以改成从后端获取可使用的语言
 function LanguageSelect(props){
     
@@ -21,7 +32,7 @@ export default function CodeEditor({value, onChange, language, onLanguageChange,
     const [extensions, setExtensions] = useState([]);
 
     useEffect(()=>{
-        setExtensions([langs[language]()])
+        setExtensions([langs[language](), ls])
     }, [language])
 
     return(
