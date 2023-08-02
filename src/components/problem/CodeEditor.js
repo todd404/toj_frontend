@@ -2,6 +2,9 @@ import CodeMirror from "@uiw/react-codemirror"
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { Tabs, Select, Button } from "antd";
 import { useEffect, useState } from "react";
+import {keymap} from "@codemirror/view"
+import {insertTab} from "@codemirror/commands"
+import {acceptCompletion} from "@codemirror/autocomplete"
 import './css/CodeEditor.css'
 
 import { languageServer } from 'codemirror-languageserver';
@@ -32,7 +35,14 @@ export default function CodeEditor({value, onChange, language, onLanguageChange,
     const [extensions, setExtensions] = useState([]);
 
     useEffect(()=>{
-        setExtensions([langs[language](), ls])
+        setExtensions([
+            langs[language](),
+            ls,
+            keymap.of([
+                {key: "Tab", run: acceptCompletion, preventDefault: true},
+                {key: "Tab", run: insertTab, preventDefault: true}
+            ])
+        ])
     }, [language])
 
     return(
