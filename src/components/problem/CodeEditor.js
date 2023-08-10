@@ -4,17 +4,23 @@ import { Tabs, Select, Button } from "antd";
 import { useEffect, useState } from "react";
 import {keymap} from "@codemirror/view"
 import {insertTab} from "@codemirror/commands"
+import {EditorState, Compartment} from "@codemirror/state"
 import {acceptCompletion} from "@codemirror/autocomplete"
+import {indentUnit} from '@codemirror/language'
 import './css/CodeEditor.css'
 
 import { languageServer } from 'codemirror-languageserver';
+import { v4 as uuidv4 } from "uuid"
+
+let uuid = uuidv4();
+let tabSize = new Compartment
 
 var ls = languageServer({
 	// WebSocket server uri and other client options.
 	serverUri: "ws://localhost:3000/cpp",
-	rootUri: 'file://~/lgs/ccls/save_files',
+	rootUri: `file://~/lgs/ccls/save_files/${uuid}`,
 
-	documentUri: `file://~/lgs/ccls/save_files/main.cpp`,
+	documentUri: `file://~/lgs/ccls/save_files/${uuid}/main.cpp`,
 	languageId: 'cpp' // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
 });
 
@@ -38,10 +44,12 @@ export default function CodeEditor({value, onChange, language, onLanguageChange,
         setExtensions([
             langs[language](),
             ls,
+            tabSize.of(EditorState.tabSize.of(4)),
             keymap.of([
                 {key: "Tab", run: acceptCompletion, preventDefault: true},
                 {key: "Tab", run: insertTab, preventDefault: true}
-            ])
+            ]),
+            indentUnit.of("\t")
         ])
     }, [language])
 
@@ -59,7 +67,8 @@ export default function CodeEditor({value, onChange, language, onLanguageChange,
             <CodeMirror
                 {...{value, onChange, extensions}}
                 height='100%'
-                readOnly={false} />
+                readOnly={false}
+                indentWithTab={false} />
             <Button className="submit-button" onClick={onSubmitClick}>提交</Button>
         </div>
     )
