@@ -60,7 +60,7 @@ export default function SubCommnet({parentId, onFoldCLick, focus}){
         <ConfigProvider
             theme={{
                 token:{
-                    fontSize: "8px"
+                    fontSize: "12px"
                 }
             }}
         >

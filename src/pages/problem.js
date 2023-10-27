@@ -2,9 +2,10 @@ import { useParams } from 'umi'
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ProblemContent from '../components/problem/ProblemContent';
 import ResizeHandle from '../components/problem/ResizeHandle';
-import { useEffect, useState } from 'react';
-import CodeEditor from '../components/problem/CodeEditor';
-import { FloatButton, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+//import CodeEditor from '../components/problem/CodeEditor';
+const CodeEditor = React.lazy(async ()=> import('../components/problem/CodeEditor'))
+import { FloatButton, Skeleton, message } from 'antd';
 import axios from 'axios';
 import StateDrawer from '../components/problem/StateDrawer/StateDrawer';
 
@@ -14,12 +15,22 @@ const postJudge = async (data)=>{
     return res;
 }
 
+const getLanguageConfig = async ()=>{
+    let url = `/api/get-language-config`
+    let res = await axios.get(url)
+
+    return res.data
+}
+
 export default function problem(){
     const { id } = useParams();
-    const [language, setLanguage] = useState("cpp"); 
+    const [language, setLanguage] = useState(""); 
     const [code, setCode] = useState("");
     const [uuid, setUuid] = useState("");
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [languageConfig, setLanguageConfig] = useState({
+        language_list: []
+    })
 
     document.addEventListener('keydown', function(event) {
         if (event.ctrlKey && event.key === "s") {
@@ -59,6 +70,21 @@ export default function problem(){
         }
     }, [uuid])
 
+    const loadLanguageConfig = async ()=>{
+        let config = await getLanguageConfig();
+        setLanguageConfig(config)
+    }
+
+    useEffect(()=>{
+        loadLanguageConfig();
+    }, [])
+
+    useEffect(()=>{
+        if(languageConfig.language_list.length > 0){
+            setLanguage(languageConfig.language_list[0].id)
+        }
+    }, [languageConfig])
+
     return(
         <div style={{height: "100%"}}>
             <PanelGroup autoSaveId="problem" direction="horizontal">
@@ -67,12 +93,19 @@ export default function problem(){
                 </Panel>
                 <ResizeHandle/>
                 <Panel defaultSize={ 50 }>
-                    <CodeEditor
-                        {...{language, onSubmitClick}}
-                        value={code}
-                        onChange={(v)=>{setCode(v)}}
-                        onLanguageChange={(value)=>setLanguage(value)}
-                    />
+                    <Skeleton active
+                        loading = {language === ""}
+                    >
+                        {
+                            language === "" ? null :
+                            <CodeEditor
+                                {...{language, onSubmitClick, languageConfig}}
+                                value={code}
+                                onChange={(v)=>{setCode(v)}}
+                                onLanguageChange={(value)=>setLanguage(value)}
+                            />
+                        }
+                    </Skeleton>
                 </Panel>
             </PanelGroup>
 

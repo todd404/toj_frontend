@@ -15,34 +15,58 @@ import { v4 as uuidv4 } from "uuid"
 let uuid = uuidv4();
 let tabSize = new Compartment
 
-var ls = languageServer({
-	// WebSocket server uri and other client options.
-	serverUri: "ws://localhost:3000/cpp",
-	rootUri: `file://~/lgs/ccls/save_files/${uuid}`,
+const getNewLs = (languageConfig, language)=>{
+    let language_list = languageConfig.language_list
+    let config = {}
+    for(let v of language_list){
+        if(v.id == language){
+            config = v;
+            break;
+        }
+    }
 
-	documentUri: `file://~/lgs/ccls/save_files/${uuid}/main.cpp`,
-	languageId: 'cpp' // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
-});
-
-//TODO:可以改成从后端获取可使用的语言
-function LanguageSelect(props){
+    var ls = languageServer({
+        // WebSocket server uri and other client options.
+        serverUri: `ws://localhost:3000/${config.id}`,
+        rootUri: `${config.rootUri}`,
     
-    const options = [
-        {value: "cpp", label: "C++"},
-        {value: "java", label: "Java"},
-    ]
+        documentUri: `${config.rootUri}Solution.${config.id}`,
+        languageId: `${config.id}` // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
+    });
 
-    return (
-        <Select options={options} {...props}></Select>
-    )
+    return ls;
 }
 
-export default function CodeEditor({value, onChange, language, onLanguageChange, onSubmitClick}){
+const getNewLanguageExtension = (l)=>{
+    if(l){
+        return langs[l]()
+    }
+    return langs["textile"]()
+}
+
+export default function CodeEditor({value, onChange, language, languageConfig, onLanguageChange, onSubmitClick}){
     const [extensions, setExtensions] = useState([]);
+    const [languageOptions, setLanguageOptions] = useState([
+        {value: "cpp", label: "C++"},
+    ])
 
     useEffect(()=>{
+        let options = languageConfig.language_list.map((v)=>{
+            return {
+                value: v.id,
+                label: v.name
+            }
+        })
+
+        setLanguageOptions(options)
+    }, [languageConfig])
+
+    useEffect(()=>{
+        let ls = getNewLs(languageConfig, language)
+        let lang = getNewLanguageExtension(language)
+
         setExtensions([
-            langs[language](),
+            lang,
             ls,
             tabSize.of(EditorState.tabSize.of(4)),
             keymap.of([
@@ -57,7 +81,8 @@ export default function CodeEditor({value, onChange, language, onLanguageChange,
         <div className="wrapper">
             <Tabs 
                 tabBarExtraContent={(
-                    <LanguageSelect
+                    <Select
+                        options={languageOptions}
                         className="language-selector"
                         value={language}
                         onChange={onLanguageChange}
