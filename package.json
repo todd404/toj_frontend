@@ -27,8 +27,7 @@
     "react-resizable-panels": "^0.0.41",
     "react-syntax-highlighter": "^15.5.0",
     "rehype-highlight": "^6.0.0",
-    "umi": "^4.0.66",
-    "uuid": "^9.0.0"
+    "umi": "^4.0.66"
   },
   "devDependencies": {
     "@types/react": "^18.0.33",

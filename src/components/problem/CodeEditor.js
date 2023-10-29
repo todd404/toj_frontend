@@ -10,9 +10,7 @@ import {indentUnit} from '@codemirror/language'
 import './css/CodeEditor.css'
 
 import { languageServer } from 'codemirror-languageserver';
-import { v4 as uuidv4 } from "uuid"
 
-let uuid = uuidv4();
 let tabSize = new Compartment
 
 const getNewLs = (languageConfig, language)=>{
@@ -28,9 +26,9 @@ const getNewLs = (languageConfig, language)=>{
     var ls = languageServer({
         // WebSocket server uri and other client options.
         serverUri: `ws://localhost:3000/${config.id}`,
-        rootUri: `${config.rootUri}`,
+        rootUri: `${config.rootUri}/`,
     
-        documentUri: `${config.rootUri}Solution.${config.id}`,
+        documentUri: `${config.rootUri}/Solution.${config.id}`,
         languageId: `${config.id}` // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
     });
 
