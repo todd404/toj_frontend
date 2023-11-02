@@ -45,19 +45,31 @@ export default function ProblemEditPage(){
         let { title, upload_answer, upload_test, difficulty, time_limit, memory_limit } = values;
         
         let formData = {problem_id: id, title, content, difficulty, time_limit, memory_limit};
-
+        let test_file, answer_file;
+        
+        let upload_file_count = 0;
         if(upload_answer){
-            let answer_file = values.upload_answer.file;
+            answer_file = values.upload_answer.file;
             if(answer_file.status == "done"){
-                formData["answer_file_uuid"] = answer_file.response.file_uuid;
+                upload_file_count++;
             }
         }
 
         if(upload_test){
-            let test_file = values.upload_test.file;
+            test_file = values.upload_test.file;
             if(test_file.status == "done"){
-                formData["test_file_uuid"] = test_file.response.file_uuid;
+                upload_file_count++;
             }
+        }
+
+        if(upload_file_count == 1){
+            message.error("你只上传了测试文件或者答案文件的其中一个，应该配套上传")
+            return
+        }
+
+        if(upload_file_count == 2){
+            formData["answer_file_uuid"] = answer_file.response.file_uuid;
+            formData["test_file_uuid"] = test_file.response.file_uuid;
         }
 
         postEditForm(formData);
